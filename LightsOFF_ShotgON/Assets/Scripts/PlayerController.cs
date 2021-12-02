@@ -42,23 +42,23 @@ public class PlayerController : MonoBehaviour
         chatText.text += _message;
     }
 
-    public void CheckInputBoxMessage()
-    {
-        if (!Input.GetKeyDown(KeyCode.Return)) { return; }
+    //public void CheckInputBoxMessage()
+    //{
+    //    if (!Input.GetKeyDown(KeyCode.Return)) { return; }
 
-        string _message = inputField.text;
+    //    string _message = inputField.text;
 
-        if (string.IsNullOrWhiteSpace(_message)) { return; }
+    //    if (string.IsNullOrWhiteSpace(_message)) { return; }
 
-        SendChatMessageToServer(_message);
+    //    SendChatMessageToServer(_message);
 
-        inputField.text = string.Empty;
-    }
+    //    inputField.text = string.Empty;
+    //}
 
-    public void SendChatMessageToServer(string _message)
-    {
-        ClientSend.ChatMessage(_message);
-    }
+    //public void SendChatMessageToServer(string _message)
+    //{
+    //    ClientSend.ChatMessage(_message);
+    //}
 
     /// <summary>Sends player input to the server.</summary>
     private void SendInputToServer()
@@ -71,6 +71,9 @@ public class PlayerController : MonoBehaviour
             Input.GetKey(KeyCode.D),
         };
 
-        ClientSend.PlayerMovement(_inputs);
+        if (_inputs[0] || _inputs[1] || _inputs[2] || _inputs[3])
+        {
+            ClientSend.PlayerMovement(_inputs);
+        }
     }
 }

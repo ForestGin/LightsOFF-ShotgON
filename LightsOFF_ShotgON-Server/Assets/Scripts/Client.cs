@@ -250,7 +250,7 @@ public class Client
     {
         if (tcp.isConnected && udp.isConnected)
         {
-            UnityEngine.Object.Destroy(player.gameObject);
+            player.DisconnectedDestroy();
             player = null;
            
             Debug.Log($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");

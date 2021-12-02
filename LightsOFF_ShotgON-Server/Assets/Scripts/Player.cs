@@ -23,6 +23,11 @@ public class Player : MonoBehaviour
         inputs = new bool[4];
     }
 
+    public void DisconnectedDestroy()
+    {
+        Destroy(this);
+    }
+
     /// <summary>Processes player input and moves the player.</summary>
     public void FixedUpdate()
     {
