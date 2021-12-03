@@ -24,7 +24,7 @@ public class Client
     public class TCP
     {
         public TcpClient socket;
-        public bool isConnected;
+        //public bool isConnected;
 
         private readonly int id;
         private NetworkStream stream;
@@ -53,7 +53,7 @@ public class Client
 
             ServerSend.Welcome(id, "Welcome to the server!");
 
-            isConnected = true;
+            //isConnected = true;
         }
 
         /// <summary>Sends data to the client via TCP.</summary>
@@ -160,14 +160,14 @@ public class Client
             receiveBuffer = null;
             socket = null;
 
-            isConnected = false;
+            //isConnected = false;
         }
     }
 
     public class UDP
     {
         public IPEndPoint endPoint;
-        public bool isConnected;
+        //public bool isConnected;
 
         private int id;
 
@@ -181,7 +181,7 @@ public class Client
         public void Connect(IPEndPoint _endPoint)
         {
             endPoint = _endPoint;
-            isConnected = true;
+            //isConnected = true;
         }
 
         /// <summary>Sends data to the client via UDP.</summary>
@@ -212,7 +212,7 @@ public class Client
         public void Disconnect()
         {
             endPoint = null;
-            isConnected = false;
+            //isConnected = false;
         }
     }
 
@@ -248,15 +248,15 @@ public class Client
     /// <summary>Disconnects the client and stops all network traffic.</summary>
     private void Disconnect()
     {
-        if (tcp.isConnected && udp.isConnected)
-        {
-            player.DisconnectedDestroy();
+        //if (tcp.isConnected && udp.isConnected)
+        //{
+            //player.DisconnectedDestroy();
             player = null;
            
             Debug.Log($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
 
             tcp.Disconnect();
             udp.Disconnect();
-        }
+        //}
     }
 }

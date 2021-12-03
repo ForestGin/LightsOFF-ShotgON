@@ -71,9 +71,9 @@ public class PlayerController : MonoBehaviour
             Input.GetKey(KeyCode.D),
         };
 
-        if (_inputs[0] || _inputs[1] || _inputs[2] || _inputs[3])
-        {
+        //if (_inputs[0] || _inputs[1] || _inputs[2] || _inputs[3])
+        //{
             ClientSend.PlayerMovement(_inputs);
-        }
+        //}
     }
 }
