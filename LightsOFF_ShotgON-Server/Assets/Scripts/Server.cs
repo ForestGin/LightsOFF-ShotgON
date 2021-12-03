@@ -135,4 +135,10 @@ public class Server
             };
         Debug.Log("Initialized packets.");
     }
+
+    public static Stop()
+    {
+        tcpListener.Stop();
+        udpListener.Close();
+    }
 }
