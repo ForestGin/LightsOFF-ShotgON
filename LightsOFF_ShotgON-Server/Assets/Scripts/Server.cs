@@ -136,7 +136,7 @@ public class Server
         Debug.Log("Initialized packets.");
     }
 
-    public static Stop()
+    public static void Stop()
     {
         tcpListener.Stop();
         udpListener.Close();
