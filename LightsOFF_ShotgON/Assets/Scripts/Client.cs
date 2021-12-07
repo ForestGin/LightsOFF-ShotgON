@@ -304,6 +304,7 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.playerRotation, ClientHandle.PlayerRotation },
             { (int)ServerPackets.chatMessageFromPlayer, ClientHandle.ChatMessageFromPlayer },
             { (int)ServerPackets.chatMessageFromServer, ClientHandle.ChatMessageFromServer },
+            { (int)ServerPackets.playerDisconected, ClientHandle.PlayerDisconected },
         };
         Debug.Log("Initialized packets.");
     }

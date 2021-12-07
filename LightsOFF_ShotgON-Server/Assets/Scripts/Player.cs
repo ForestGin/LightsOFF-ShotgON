@@ -10,9 +10,12 @@ public class Player : MonoBehaviour
     public string chatMessage;
     
     public CharacterController controller;
+    public Transform shootOrigin;
     public float gravity = -9.81f;
     public float moveSpeed = 5f;
     public float jumpSpeed = 5f;
+    public float health;
+    public float maxHealth = 100f;
 
     private bool[] inputs;
     private float yVelocity = 0;
@@ -29,6 +32,7 @@ public class Player : MonoBehaviour
         username = _username;
         color = _color;
         chatMessage = null;
+        health = maxHealth;
 
         inputs = new bool[5];
     }
@@ -36,6 +40,11 @@ public class Player : MonoBehaviour
     /// <summary>Processes player input and moves the player.</summary>
     public void FixedUpdate()
     {
+        if (health <= 0f)
+        {
+            return;
+        }
+
         Vector2 _inputDirection = Vector2.zero;
         if (inputs[0])
         {
@@ -55,28 +64,6 @@ public class Player : MonoBehaviour
         }
 
         Move(_inputDirection);
-    }
-
-    public void SetChatMessage(string _message)
-    {
-        chatMessage = ColorText(color, username + ": ") + _message;
-        ServerSend.ChatMessageFromPlayer(this);
-    }
-
-    public void SetWelcomeMessage()
-    {
-        chatMessage = "Welcome " + ColorText(color, username) + " to the chat!!";
-        ServerSend.ChatMessageFromPlayer(id, this);
-    }
-
-    public void SetWelcomeMessage(int _id)
-    {
-        chatMessage = 
-            "Welcome to the chat!!\n" +
-            "Your username and color is: " + ColorText(color, username) + "\n"/* +
-            "You can type \"\\help\" to see the commands list."*/;
-
-        ServerSend.ChatMessageWhisper(_id, this);
     }
 
     /// <summary>Calculates the player's desired movement direction and moves him.</summary>
@@ -111,6 +98,56 @@ public class Player : MonoBehaviour
     {
         inputs = _inputs;
         transform.rotation = _rotation;
+    }
+
+    public void Shoot(Vector3 _viewDirection)
+    {
+        if (Physics.Raycast(shootOrigin.position, _viewDirection, out RaycastHit _hit, 25f))
+        {
+            if(_hit.collider.CompareTag("Player"))
+            {
+
+            }
+        }
+    }
+
+    public void TakeDamage(float _damage)
+    {
+        if (health <= 0)
+        {
+            return;
+        }
+
+        health -= _damage;
+        if (health <= 0f)
+        {
+            health = 0f;
+            controller.enabled = false;
+            transform.position = new Vector3(0f, 25f, 0f);
+            ServerSend.PlayerPosition(this);
+        }
+    }
+
+    public void SetChatMessage(string _message)
+    {
+        chatMessage = ColorText(color, username + ": ") + _message;
+        ServerSend.ChatMessageFromPlayer(this);
+    }
+
+    public void SetWelcomeMessage()
+    {
+        chatMessage = "Welcome " + ColorText(color, username) + " to the chat!!";
+        ServerSend.ChatMessageFromPlayer(id, this);
+    }
+
+    public void SetWelcomeMessage(int _id)
+    {
+        chatMessage =
+            "Welcome to the chat!!\n" +
+            "Your username and color is: " + ColorText(color, username) + "\n"/* +
+            "You can type \"\\help\" to see the commands list."*/;
+
+        ServerSend.ChatMessageWhisper(_id, this);
     }
 
     public string ColorText(Color _color, string _text)

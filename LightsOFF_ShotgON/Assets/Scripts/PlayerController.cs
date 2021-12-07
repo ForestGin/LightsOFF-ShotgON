@@ -10,8 +10,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private TMP_Text playerName = null;
     [SerializeField] private GameObject playerModel = null;
 
-
+    public Transform camTransform;
     private bool spawned = false;
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            ClientSend.PlayerShoot(camTransform.forward);
+        }
+    }
 
     private void FixedUpdate()
     {

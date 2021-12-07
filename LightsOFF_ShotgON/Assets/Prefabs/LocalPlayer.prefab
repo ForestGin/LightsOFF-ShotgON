@@ -1157,6 +1157,7 @@ MonoBehaviour:
   inputField: {fileID: 6767117247978892087}
   playerName: {fileID: 229827298534683212}
   playerModel: {fileID: 1172086184467933461}
+  camTransform: {fileID: 1243984683900922996}
 --- !u!1 &8344694473797022004
 GameObject:
   m_ObjectHideFlags: 0
