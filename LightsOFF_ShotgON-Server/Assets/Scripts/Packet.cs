@@ -13,7 +13,9 @@ public enum ServerPackets
     playerRotation,
     chatMessageFromPlayer,
     chatMessageFromServer,
-    playerDisconected
+    playerDisconected,
+    playerHealth,
+    playerRespawned
 }
 
 /// <summary>Sent from client to server.</summary>

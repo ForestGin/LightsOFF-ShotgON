@@ -305,6 +305,9 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.chatMessageFromPlayer, ClientHandle.ChatMessageFromPlayer },
             { (int)ServerPackets.chatMessageFromServer, ClientHandle.ChatMessageFromServer },
             { (int)ServerPackets.playerDisconected, ClientHandle.PlayerDisconected },
+            { (int)ServerPackets.playerHealth, ClientHandle.PlayerHealth },
+            { (int)ServerPackets.playerRespawned, ClientHandle.PlayerRespawned }
+
         };
         Debug.Log("Initialized packets.");
     }

@@ -1139,6 +1139,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   username: 
+  health: 0
+  maxHealth: 100
+  model: {fileID: 829117775900897876}
   color: {r: 0, g: 0, b: 0, a: 0}
   islocal: 0
 --- !u!114 &6761221046541469059
