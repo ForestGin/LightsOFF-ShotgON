@@ -132,6 +132,7 @@ public class Server
                 { (int)ClientPackets.playerMovement, ServerHandle.PlayerMovement },
                 { (int)ClientPackets.chatMessage, ServerHandle.ChatMessage },
                 { (int)ClientPackets.playerShoot, ServerHandle.PlayerShoot },
+                { (int)ClientPackets.playerShoot, ServerHandle.PlayerReady },
 
             };
         Debug.Log("Initialized packets.");

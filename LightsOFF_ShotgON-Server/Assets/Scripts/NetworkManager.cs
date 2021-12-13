@@ -5,6 +5,7 @@ using UnityEngine;
 public class NetworkManager : MonoBehaviour
 {
     public static NetworkManager instance;
+    public int numClients;
 
     public GameObject playerPrefab;
 
@@ -29,10 +30,16 @@ public class NetworkManager : MonoBehaviour
         Server.Start(50, 26950);
     }
 
+    private void Update()
+    {
+        Server.clients.Count;   
+    }
+
     private void OnApplicationQuit()
     {
         Server.Stop();
     }
+
     public Player InstantiatePlayer()
     {
         return Instantiate(playerPrefab, new Vector3(0f, 0.5f, 0f), Quaternion.identity).GetComponent<Player>();

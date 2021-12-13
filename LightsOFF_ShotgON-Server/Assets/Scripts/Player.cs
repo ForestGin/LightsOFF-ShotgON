@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public string username;
     public Color color;
     public string chatMessage;
+    public bool isReady;
     
     public CharacterController controller;
     public Transform shootOrigin;
@@ -26,12 +27,15 @@ public class Player : MonoBehaviour
         moveSpeed *= Time.fixedDeltaTime;
         jumpSpeed *= Time.fixedDeltaTime;
     }
+
     public void Initialize(int _id, string _username, Color _color)
     {
         id = _id;
         username = _username;
         color = _color;
         chatMessage = null;
+        isReady = false;
+
         health = maxHealth;
 
         inputs = new bool[5];

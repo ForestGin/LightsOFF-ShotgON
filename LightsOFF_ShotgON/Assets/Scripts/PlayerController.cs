@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private TMP_Text playerName = null;
     [SerializeField] private GameObject playerModel = null;
 
+    [SerializeField] private GameObject readyButton = null;
+
     public Transform camTransform;
     private bool spawned = false;
 
@@ -31,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
             //THIS SHOUL BE DONE TO EVERY PLAYER BY THE GAME MANAGER
             //Checking if the player is local one 
-            if (gameObject.GetComponent<PlayerManager>().islocal)
+            if (gameObject.GetComponent<PlayerManager>().isLocal)
             {
                 //Setting Name Tag
                 playerName.text = gameObject.GetComponent<PlayerManager>().username;
@@ -84,5 +86,11 @@ public class PlayerController : MonoBehaviour
         
         ClientSend.PlayerMovement(_inputs);
         
+    }
+
+    private void SendReady()
+    {
+        gameObject.GetComponent<PlayerManager>().isReady = true;
+        ClientSend.PlayerReady(true);
     }
 }

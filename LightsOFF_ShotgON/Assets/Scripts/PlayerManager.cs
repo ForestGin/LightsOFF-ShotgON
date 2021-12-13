@@ -6,11 +6,16 @@ public class PlayerManager : MonoBehaviour
 {
     public int id;
     public string username;
+    public Color color;
+    public bool isLocal;
+
     public float health;
     public float maxHealth;
+
     public MeshRenderer model;
-    public Color color;
-    public bool islocal;
+
+    public bool isReady;
+    
 
     public void Initialize(int _id, string _username, Color _color)
     {
@@ -18,6 +23,7 @@ public class PlayerManager : MonoBehaviour
         username = _username;
         color = _color;
         health = maxHealth;
+        isReady = false;
     }
 
     public void SetHealth(float _health)

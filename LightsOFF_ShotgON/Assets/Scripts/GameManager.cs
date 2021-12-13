@@ -43,12 +43,12 @@ public class GameManager : MonoBehaviour
         if (_id == Client.instance.myId)
         {
             _player = Instantiate(localPlayerPrefab, _position, _rotation);
-            _player.GetComponent<PlayerManager>().islocal = true;
+            _player.GetComponent<PlayerManager>().isLocal = true;
         }
         else
         {
             _player = Instantiate(playerPrefab, _position, _rotation);
-            _player.GetComponent<PlayerManager>().islocal = false;
+            _player.GetComponent<PlayerManager>().isLocal = false;
         }
 
         _player.GetComponent<PlayerManager>().Initialize(_id, _username, _color);

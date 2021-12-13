@@ -26,6 +26,7 @@ public enum ClientPackets
     playerMovement,
     chatMessage,
     playerShoot,
+    playerReady,
 }
 
 public class Packet : IDisposable

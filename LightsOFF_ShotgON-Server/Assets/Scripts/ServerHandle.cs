@@ -53,5 +53,12 @@ public class ServerHandle
 
         Server.clients[_fromClient].player.Shoot(_shootDirection);
     }
+
+    public static void PlayerReady(int _fromClient, Packet _packet)
+    {
+        bool _isReady = _packet.ReadBool();
+
+        Server.clients[_fromClient].player.isReady = _isReady;
+    }
 }
     
