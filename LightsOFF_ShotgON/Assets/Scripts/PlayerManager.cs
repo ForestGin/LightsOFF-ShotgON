@@ -12,6 +12,8 @@ public class PlayerManager : MonoBehaviour
     public float health;
     public float maxHealth;
 
+    public int itemCount = 0;
+
     public MeshRenderer model;
 
     public bool isReady;
