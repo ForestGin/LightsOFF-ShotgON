@@ -108,6 +108,11 @@ public class Player : MonoBehaviour
 
     public void Shoot(Vector3 _viewDirection)
     {
+        if (health <= 0f)
+        {
+            return;
+        }
+
         if (Physics.Raycast(shootOrigin.position, _viewDirection, out RaycastHit _hit, 25f))
         {
             if(_hit.collider.CompareTag("Player"))
