@@ -5,7 +5,8 @@ using UnityEngine;
 public class NetworkManager : MonoBehaviour
 {
     public static NetworkManager instance;
-    public int numClients;
+    private int numClients;
+    public int minPlayersToStart;
 
     public GameObject playerPrefab;
 
@@ -32,7 +33,10 @@ public class NetworkManager : MonoBehaviour
 
     private void Update()
     {
-        Server.clients.Count;   
+        if (numClients >= minPlayersToStart)
+        {
+            //ServerSend.GameReady();
+        }
     }
 
     private void OnApplicationQuit()
@@ -43,5 +47,10 @@ public class NetworkManager : MonoBehaviour
     public Player InstantiatePlayer()
     {
         return Instantiate(playerPrefab, new Vector3(0f, 0.5f, 0f), Quaternion.identity).GetComponent<Player>();
+    }
+
+    public void CountPlayers()
+    {
+        numClients = Server.clients.Count;
     }
 }

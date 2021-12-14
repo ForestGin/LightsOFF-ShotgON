@@ -52,7 +52,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 7455574231334980082}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 0.5
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -1144,6 +1144,7 @@ MonoBehaviour:
   isLocal: 0
   health: 0
   maxHealth: 100
+  itemCount: 0
   model: {fileID: 829117775900897876}
   isReady: 0
 --- !u!114 &6761221046541469059
@@ -1182,7 +1183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2853896539465689281
 RectTransform:
   m_ObjectHideFlags: 0
