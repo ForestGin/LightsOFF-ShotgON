@@ -26,7 +26,7 @@ public class ServerHandle
 
         Server.clients[_fromClient].player.SetWelcomeMessage();
         Server.clients[_fromClient].player.SetWelcomeMessage(_fromClient);
-        NetworkManager.instance.CountPlayers();
+       // NetworkManager.instance.CountPlayers();
     }
 
     public static void ChatMessage(int _fromClient, Packet _packet)

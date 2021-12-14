@@ -15,6 +15,10 @@ public class PlayerController : MonoBehaviour
     public Transform camTransform;
     private bool spawned = false;
 
+    private void Start()
+    {
+       Cursor.visible = false;
+    }
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Mouse0))

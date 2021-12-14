@@ -23,6 +23,11 @@ public class Player : MonoBehaviour
     private bool[] inputs;
     private float yVelocity = 0;
 
+
+    //Shoot
+    public Transform spawnPoint;
+    public GameObject muzzle;
+    public GameObject impact;
     private void Start()
     {
         gravity *= Time.fixedDeltaTime * Time.fixedDeltaTime;
@@ -108,17 +113,60 @@ public class Player : MonoBehaviour
 
     public void Shoot(Vector3 _viewDirection)
     {
+        RaycastHit hit;
+        RaycastHit hit2;
+        RaycastHit hit3;
+        RaycastHit hit4;
+
+        GameObject muzzleInstance = Instantiate(muzzle, spawnPoint.position, spawnPoint.localRotation);
+        muzzleInstance.transform.parent = spawnPoint;
+
         if (health <= 0f)
         {
             return;
         }
 
-        if (Physics.Raycast(shootOrigin.position, _viewDirection, out RaycastHit _hit, 25f))
+        if (Physics.Raycast(shootOrigin.position, _viewDirection, out hit, 25f))
         {
-            if(_hit.collider.CompareTag("Player"))
+            Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
+
+            if (hit.collider.CompareTag("Player"))
             {
                 //modify damage in function call to make it one shot 
-                _hit.collider.GetComponent<Player>().TakeDamage(50f);
+                hit.collider.GetComponent<Player>().TakeDamage(100f);
+            }
+        }
+
+        if (Physics.Raycast(shootOrigin.position, _viewDirection + new Vector3(-.2f, 0f, 0f), out hit2, 25f))
+        {
+            Instantiate(impact, hit2.point, Quaternion.LookRotation(hit2.normal));
+
+            if (hit2.collider.CompareTag("Player"))
+            {
+                //modify damage in function call to make it one shot 
+                hit2.collider.GetComponent<Player>().TakeDamage(100f);
+            }
+        }
+
+        if (Physics.Raycast(shootOrigin.position, _viewDirection + new Vector3(0f, .1f, 0f), out hit3, 25f))
+        {
+            Instantiate(impact, hit3.point, Quaternion.LookRotation(hit3.normal));
+
+            if (hit3.collider.CompareTag("Player"))
+            {
+                //modify damage in function call to make it one shot 
+                hit3.collider.GetComponent<Player>().TakeDamage(100f);
+            }
+        }
+
+        if (Physics.Raycast(shootOrigin.position, _viewDirection + new Vector3(0f, -.1f, 0f), out hit4, 25f))
+        {
+            Instantiate(impact, hit4.point, Quaternion.LookRotation(hit4.normal));
+
+            if (hit4.collider.CompareTag("Player"))
+            {
+                //modify damage in function call to make it one shot 
+                hit4.collider.GetComponent<Player>().TakeDamage(100f);
             }
         }
     }
