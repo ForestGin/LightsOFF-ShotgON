@@ -53,6 +53,7 @@ public class Client
 
             ServerSend.Welcome(id, "Welcome to the server!");
 
+            NetworkManager.instance.numClients++;
             //isConnected = true;
         }
 
@@ -260,6 +261,7 @@ public class Client
         });
            
         Debug.Log($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
+        NetworkManager.instance.numClients--;
 
         tcp.Disconnect();
         udp.Disconnect();

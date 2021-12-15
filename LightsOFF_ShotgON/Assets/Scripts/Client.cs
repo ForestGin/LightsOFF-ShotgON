@@ -308,6 +308,8 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.itemSpawned, ClientHandle.ItemSpawned },
             { (int)ServerPackets.itemPickedUp, ClientHandle.ItemPickedUp },
             { (int)ServerPackets.bulletHit, ClientHandle.BulletHit },
+            { (int)ServerPackets.gameStart, ClientHandle.GameStart }
+
 
         };
         Debug.Log("Initialized packets.");

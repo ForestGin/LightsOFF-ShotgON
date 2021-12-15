@@ -265,5 +265,15 @@ public class ServerSend
         }
     }
 
+    public static void GameStart(bool _gameStarted)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.gameStart))
+        {
+            _packet.Write(_gameStarted);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
     #endregion
 }

@@ -136,4 +136,11 @@ public class ClientHandle : MonoBehaviour
 
         GameManager.instance.CreateBulletHitParticles(_hit, _hit2, _hit3, _hit4, _hitN, _hit2N, _hit3N, _hit4N);
     }
+
+    public static void GameStart(Packet _packet)
+    {
+        bool _gameStarted = _packet.ReadBool();
+
+        //GameManager.instance.GameStart();
+    }
 }

@@ -24,9 +24,9 @@ public class ServerHandle
 
         Debug.Log($"{Server.clients[_fromClient].player.username} spawned successfully");
 
+        Server.clients[_fromClient].player.currentPlayerGameState = Player.playerGameState.SPAWNED;
         Server.clients[_fromClient].player.SetWelcomeMessage();
         Server.clients[_fromClient].player.SetWelcomeMessage(_fromClient);
-       // NetworkManager.instance.CountPlayers();
     }
 
     public static void ChatMessage(int _fromClient, Packet _packet)
@@ -59,8 +59,9 @@ public class ServerHandle
     {
         bool _isReady = _packet.ReadBool();
 
-        Server.clients[_fromClient].player.isReady = _isReady;
-        NetworkManager.instance.CountPlayers();
+        //Reads content of bool and sets player state (for now can only be set to ready and can't be unset)
+        if (_isReady) Server.clients[_fromClient].player.currentPlayerGameState = Player.playerGameState.READY;
+        else Server.clients[_fromClient].player.currentPlayerGameState = Player.playerGameState.SPAWNED;
     }
 }
     

@@ -5,13 +5,15 @@ using UnityEngine;
 public class NetworkManager : MonoBehaviour
 {
     public static NetworkManager instance;
-    private int numClients;
+
+    [HideInInspector]public int numClients;
+
     public int minPlayersToStart;
 
     private bool gameStarted = false;
 
     public int gameTimeMinutes;
-    private float currentTime;
+    private float currentGameTime;
     public int actionTimeSeconds;
     private float currentActionTime;
 
@@ -51,10 +53,34 @@ public class NetworkManager : MonoBehaviour
                     GameStart();
                 }
             }
-        }
-        else
-        {
+        } 
+    }
 
+    private void FixedUpdate()
+    {
+        if (gameStarted)
+        {
+            currentGameTime -= Time.deltaTime;
+            currentActionTime -= Time.deltaTime;
+
+            //Action
+            if (currentActionTime <= 0)
+            {
+                //Perform selected action
+                foreach (KeyValuePair<int, Client> entry in Server.clients)
+                {
+                    if (entry.Value.player != null)
+                    {
+                        //entry.Value.player.PerformAction();
+                    }
+                }
+
+                //Resetting time
+                currentActionTime = actionTimeSeconds;
+            }
+
+            //ServerSend.GameTimer();
+            //ServerSend.ActionTimer();
         }
     }
 
@@ -68,18 +94,29 @@ public class NetworkManager : MonoBehaviour
         return Instantiate(playerPrefab, new Vector3(0f, 0.5f, 0f), Quaternion.identity).GetComponent<Player>();
     }
 
-    public void CountPlayers()
+    public int CountAllPlayersConnnected()
     {
-        //numClients = Server.clients.Count;//This counts the maxplayer so its useless
+        int numPlayers = 0;
+        foreach (KeyValuePair<int, Client> entry in Server.clients)
+        {
+            if (entry.Value != null)
+            {
+                numPlayers++;
+            }
+        }
+        return numPlayers;
     }
 
     public bool CheckAllPlayersReady()
     {
         foreach(KeyValuePair<int, Client> entry in Server.clients)
         {
-            if(!entry.Value.player.isReady)
+            if (entry.Value.player != null)
             {
-                return false;
+                if (entry.Value.player.currentPlayerGameState != Player.playerGameState.READY)
+                {
+                    return false;
+                }
             }
         }
         return true;
@@ -88,7 +125,16 @@ public class NetworkManager : MonoBehaviour
     private void GameStart()
     {
         gameStarted = true;
-        currentTime = gameTimeMinutes * 60;
+        currentGameTime = gameTimeMinutes * 60;
         currentActionTime = actionTimeSeconds;
+
+        foreach (KeyValuePair<int, Client> entry in Server.clients)
+        {
+            if (entry.Value.player != null)
+            {
+                entry.Value.player.currentPlayerGameState = Player.playerGameState.PLAYING;
+            }
+        }
+        ServerSend.GameStart(gameStarted);
     }
 }

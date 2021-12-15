@@ -19,7 +19,8 @@ public enum ServerPackets
     createItemSpawner,
     itemSpawned,
     itemPickedUp,
-    bulletHit
+    bulletHit,
+    gameStart,
 }
 
 /// <summary>Sent from client to server.</summary>

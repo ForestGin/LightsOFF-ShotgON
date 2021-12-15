@@ -8,6 +8,26 @@ public class Player : MonoBehaviour
     public string username;
     public Color color;
     public string chatMessage;
+
+    public enum playerGameState
+    {
+        SPAWNING = -1,
+        SPAWNED,
+        READY,
+        PLAYING,
+        WINNER,
+        LOSER,
+    }
+    public playerGameState currentPlayerGameState;
+
+    public enum playerAction
+    {
+        SHOOT,
+        RELOAD,
+        SHIELD,
+    }
+    public playerAction currentPlayerAction;
+
     public bool isReady;
     
     public CharacterController controller;
@@ -41,7 +61,7 @@ public class Player : MonoBehaviour
         username = _username;
         color = _color;
         chatMessage = null;
-        isReady = false;
+        currentPlayerGameState = playerGameState.SPAWNING;
 
         health = maxHealth;
 
