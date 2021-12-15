@@ -12,6 +12,12 @@ public class GameManager : MonoBehaviour
     public GameObject localPlayerPrefab;
     public GameObject playerPrefab;
     public GameObject itemSpawnerPrefab;
+    public GameObject impact;
+
+    private GameObject bullet1;
+    private GameObject bullet2;
+    private GameObject bullet3;
+    private GameObject bullet4;
 
     private void Awake()
     {
@@ -66,6 +72,21 @@ public class GameManager : MonoBehaviour
         GameObject _spawner = Instantiate(itemSpawnerPrefab, _position, itemSpawnerPrefab.transform.rotation);
         _spawner.GetComponent<ItemSpawner>().Initialize(_spawnerId, _hasItem);
         itemSpawners.Add(_spawnerId, _spawner.GetComponent<ItemSpawner>());
+    }
+
+    public void CreateBulletHitParticles(Vector3 _hit, Vector3 _hit2, Vector3 _hit3, Vector3 _hit4, Vector3 _hitN, Vector3 _hit2N, Vector3 _hit3N, Vector3 _hit4N)
+    {
+        float time = 1f;
+
+        bullet1 = (GameObject)Instantiate(impact, _hit, Quaternion.LookRotation(_hitN));
+        bullet2 = (GameObject)Instantiate(impact, _hit2, Quaternion.LookRotation(_hit2N));
+        bullet3 = (GameObject)Instantiate(impact, _hit3, Quaternion.LookRotation(_hit3N));
+        bullet4 = (GameObject)Instantiate(impact, _hit4, Quaternion.LookRotation(_hit4N));
+        Destroy(bullet1, time);
+        Destroy(bullet2, time);
+        Destroy(bullet3, time);
+        Destroy(bullet4, time);
+
     }
     public Color RandomColor()
     {

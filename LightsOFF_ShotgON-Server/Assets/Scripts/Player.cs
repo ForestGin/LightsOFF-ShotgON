@@ -118,17 +118,17 @@ public class Player : MonoBehaviour
         RaycastHit hit3;
         RaycastHit hit4;
 
-        GameObject muzzleInstance = Instantiate(muzzle, spawnPoint.position, spawnPoint.localRotation);
-        muzzleInstance.transform.parent = spawnPoint;
+        //GameObject muzzleInstance = Instantiate(muzzle, spawnPoint.position, spawnPoint.localRotation);
+        //muzzleInstance.transform.parent = spawnPoint;
 
         if (health <= 0f)
         {
             return;
         }
 
-        if (Physics.Raycast(shootOrigin.position, _viewDirection, out hit, 25f))
+        if (Physics.Raycast(shootOrigin.position, _viewDirection, out hit, 50f))
         {
-            Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
+            //Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
 
             if (hit.collider.CompareTag("Player"))
             {
@@ -137,9 +137,9 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Physics.Raycast(shootOrigin.position, _viewDirection + new Vector3(-.2f, 0f, 0f), out hit2, 25f))
+        if (Physics.Raycast(shootOrigin.position, _viewDirection + new Vector3(-.05f, 0f, 0f), out hit2, 50f))
         {
-            Instantiate(impact, hit2.point, Quaternion.LookRotation(hit2.normal));
+            //Instantiate(impact, hit2.point, Quaternion.LookRotation(hit2.normal));
 
             if (hit2.collider.CompareTag("Player"))
             {
@@ -148,9 +148,9 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Physics.Raycast(shootOrigin.position, _viewDirection + new Vector3(0f, .1f, 0f), out hit3, 25f))
+        if (Physics.Raycast(shootOrigin.position, _viewDirection + new Vector3(0f, .05f, 0f), out hit3, 50f))
         {
-            Instantiate(impact, hit3.point, Quaternion.LookRotation(hit3.normal));
+            //Instantiate(impact, hit3.point, Quaternion.LookRotation(hit3.normal));
 
             if (hit3.collider.CompareTag("Player"))
             {
@@ -159,9 +159,9 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Physics.Raycast(shootOrigin.position, _viewDirection + new Vector3(0f, -.1f, 0f), out hit4, 25f))
+        if (Physics.Raycast(shootOrigin.position, _viewDirection + new Vector3(0f, -.05f, 0f), out hit4, 50f))
         {
-            Instantiate(impact, hit4.point, Quaternion.LookRotation(hit4.normal));
+            //Instantiate(impact, hit4.point, Quaternion.LookRotation(hit4.normal));
 
             if (hit4.collider.CompareTag("Player"))
             {
@@ -169,6 +169,8 @@ public class Player : MonoBehaviour
                 hit4.collider.GetComponent<Player>().TakeDamage(100f);
             }
         }
+
+        ServerSend.BulletHit(hit, hit2, hit3, hit4);
     }
 
     public void TakeDamage(float _damage)

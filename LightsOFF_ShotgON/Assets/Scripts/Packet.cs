@@ -18,7 +18,8 @@ public enum ServerPackets
     playerRespawned,
     createItemSpawner,
     itemSpawned,
-    itemPickedUp
+    itemPickedUp,
+    bulletHit
 }
 
 /// <summary>Sent from client to server.</summary>

@@ -247,5 +247,23 @@ public class ServerSend
         }
     }
 
+    public static void BulletHit(RaycastHit _hit, RaycastHit _hit2, RaycastHit _hit3, RaycastHit _hit4)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.bulletHit))
+        {
+            _packet.Write(_hit.point);
+            _packet.Write(_hit2.point);
+            _packet.Write(_hit3.point);
+            _packet.Write(_hit4.point);
+
+            _packet.Write(_hit.normal);
+            _packet.Write(_hit2.normal);
+            _packet.Write(_hit3.normal);
+            _packet.Write(_hit4.normal);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
     #endregion
 }

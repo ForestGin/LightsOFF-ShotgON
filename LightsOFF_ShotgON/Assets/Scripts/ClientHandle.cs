@@ -121,4 +121,19 @@ public class ClientHandle : MonoBehaviour
         GameManager.itemSpawners[_spawnerId].ItemPickedUp();
         GameManager.players[_byPlayer].itemCount++;
     }
+
+    public static void BulletHit(Packet _packet)
+    {
+        Vector3 _hit = _packet.ReadVector3();
+        Vector3 _hit2 = _packet.ReadVector3();
+        Vector3 _hit3 = _packet.ReadVector3();
+        Vector3 _hit4 = _packet.ReadVector3();
+
+        Vector3 _hitN = _packet.ReadVector3();
+        Vector3 _hit2N = _packet.ReadVector3();
+        Vector3 _hit3N = _packet.ReadVector3();
+        Vector3 _hit4N = _packet.ReadVector3();
+
+        GameManager.instance.CreateBulletHitParticles(_hit, _hit2, _hit3, _hit4, _hitN, _hit2N, _hit3N, _hit4N);
+    }
 }
