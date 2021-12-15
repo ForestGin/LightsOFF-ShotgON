@@ -1,6 +1,8 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,15 +17,40 @@ public class PlayerController : MonoBehaviour
     public Transform camTransform;
     private bool spawned = false;
 
+    //Shoot
+    public Transform spawnPoint;
+    public GameObject muzzle;
+    [SerializeField] private WeaponAnimator shotgunAnimator;
+    [SerializeField] private float zoomInFieldOfView;
+    private float baseFieldOfView;
+    [SerializeField] private Camera mainCam;
+    //public GameObject impact;
+
     private void Start()
     {
-       Cursor.visible = false;
+        baseFieldOfView = mainCam.fieldOfView;
+        Cursor.visible = false;
     }
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
+            //instantiate shoot particle
+            GameObject muzzleInstance = Instantiate(muzzle, spawnPoint.position, spawnPoint.localRotation);
+            muzzleInstance.transform.parent = spawnPoint;
+
             ClientSend.PlayerShoot(camTransform.forward);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            StopAllCoroutines();
+            StartCoroutine(ZoomAnim(true));
+        }
+        else if(Input.GetKeyUp(KeyCode.Mouse1))
+        {
+            StopAllCoroutines();
+            StartCoroutine(ZoomAnim(false));
         }
     }
 
@@ -96,5 +123,23 @@ public class PlayerController : MonoBehaviour
     {
         gameObject.GetComponent<PlayerManager>().isReady = true;
         ClientSend.PlayerReady(true);
+    }
+
+    private IEnumerator ZoomAnim(bool zoomIn)
+    {
+        shotgunAnimator.ZoomIn(zoomIn);
+        float animTime = shotgunAnimator.ZoomAnimTime;
+        float elapsed = 0f;
+        float startFieldOfView = mainCam.fieldOfView;
+
+        float endFieldOfView = (zoomIn) ? zoomInFieldOfView : baseFieldOfView;
+
+        while (elapsed < animTime)
+        {
+            float currentFieldOfView = Mathf.Lerp(startFieldOfView, endFieldOfView, elapsed / animTime);
+            mainCam.fieldOfView = currentFieldOfView;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
     }
 }
