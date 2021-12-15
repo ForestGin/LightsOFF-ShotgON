@@ -60,6 +60,7 @@ public class ServerHandle
         bool _isReady = _packet.ReadBool();
 
         Server.clients[_fromClient].player.isReady = _isReady;
+        NetworkManager.instance.CountPlayers();
     }
 }
     

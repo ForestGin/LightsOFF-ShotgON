@@ -8,6 +8,13 @@ public class NetworkManager : MonoBehaviour
     private int numClients;
     public int minPlayersToStart;
 
+    private bool gameStarted = false;
+
+    public int gameTimeMinutes;
+    private float currentTime;
+    public int actionTimeSeconds;
+    private float currentActionTime;
+
     public GameObject playerPrefab;
 
     private void Awake()
@@ -33,9 +40,21 @@ public class NetworkManager : MonoBehaviour
 
     private void Update()
     {
-        if (numClients >= minPlayersToStart)
+        if (!gameStarted)
         {
-            //ServerSend.GameReady();
+            //If minimum players to start
+            if (numClients >= minPlayersToStart)
+            {
+                //Check if all are ready
+                if (CheckAllPlayersReady())
+                {
+                    GameStart();
+                }
+            }
+        }
+        else
+        {
+
         }
     }
 
@@ -51,6 +70,25 @@ public class NetworkManager : MonoBehaviour
 
     public void CountPlayers()
     {
-        numClients = Server.clients.Count;
+        //numClients = Server.clients.Count;//This counts the maxplayer so its useless
+    }
+
+    public bool CheckAllPlayersReady()
+    {
+        foreach(KeyValuePair<int, Client> entry in Server.clients)
+        {
+            if(!entry.Value.player.isReady)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void GameStart()
+    {
+        gameStarted = true;
+        currentTime = gameTimeMinutes * 60;
+        currentActionTime = actionTimeSeconds;
     }
 }

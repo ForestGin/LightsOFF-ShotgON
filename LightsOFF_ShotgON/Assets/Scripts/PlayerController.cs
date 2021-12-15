@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,10 +13,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private TMP_Text playerName = null;
     [SerializeField] private GameObject playerModel = null;
 
-    [SerializeField] private GameObject readyButton = null;
+    [SerializeField] private Text pressReadyText = null;
+    [SerializeField] private Text readyText = null;
 
     public Transform camTransform;
     private bool spawned = false;
+    private bool pressedReady = false;
 
     //Shoot
     public Transform spawnPoint;
@@ -33,7 +36,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             //instantiate shoot particle
             GameObject muzzleInstance = Instantiate(muzzle, spawnPoint.position, spawnPoint.localRotation);
@@ -56,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!spawned)
+        if (!spawned) //This is false only the first time it loops
         {
             //Checking because the chat UI depends on the player GO so until the player spawns it cannot recieve messages
             ClientSend.PlayerSpawned();
@@ -74,6 +77,20 @@ public class PlayerController : MonoBehaviour
                 rend.material = new Material(Shader.Find("Standard"));
                 rend.material.color = gameObject.GetComponent<PlayerManager>().color;
             }   
+        }
+        else
+        {
+            if(!pressedReady)//for now you can't "unready"
+            {
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                    pressedReady = true;
+                    pressReadyText.gameObject.SetActive(false);
+                    readyText.gameObject.SetActive(true);
+
+                    SendReady();
+                }
+            }    
         }
 
         SendInputToServer();
@@ -121,7 +138,8 @@ public class PlayerController : MonoBehaviour
 
     private void SendReady()
     {
-        gameObject.GetComponent<PlayerManager>().isReady = true;
+        //gameObject.GetComponent<PlayerManager>().isReady = true;
+        
         ClientSend.PlayerReady(true);
     }
 
