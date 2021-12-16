@@ -52,8 +52,6 @@ public class Client
             stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
 
             ServerSend.Welcome(id, "Welcome to the server!");
-
-            NetworkManager.instance.numClients++;
             //isConnected = true;
         }
 
@@ -223,6 +221,7 @@ public class Client
     {
         player = NetworkManager.instance.InstantiatePlayer();
         player.Initialize(id, _playerName, _color);
+        NetworkManager.instance.numClients++;
 
         // Send all players to the new player
         foreach (Client _client in Server.clients.Values)

@@ -63,5 +63,22 @@ public class ServerHandle
         if (_isReady) Server.clients[_fromClient].player.currentPlayerGameState = Player.playerGameState.READY;
         else Server.clients[_fromClient].player.currentPlayerGameState = Player.playerGameState.SPAWNED;
     }
+
+    public static void GameTimer(int _fromClient, Packet _packet)
+    {
+        float _currentGameTime = _packet.ReadFloat();
+
+        NetworkManager.instance.GameTimerReconciliation(_fromClient, _currentGameTime);
+    }
+
+    public static void ActionTimer(int _fromClient, Packet _packet)
+    {
+        float _currentActionTime = _packet.ReadFloat();
+
+        NetworkManager.instance.ActionTimerReconciliation(_fromClient, _currentActionTime);
+    }
+
+
+
 }
     

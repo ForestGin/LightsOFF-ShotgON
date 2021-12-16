@@ -133,6 +133,8 @@ public class Server
                 { (int)ClientPackets.chatMessage, ServerHandle.ChatMessage },
                 { (int)ClientPackets.playerShoot, ServerHandle.PlayerShoot },
                 { (int)ClientPackets.playerReady, ServerHandle.PlayerReady },
+                { (int)ClientPackets.currentGameTime, ServerHandle.GameTimer },
+                { (int)ClientPackets.currentActionTime, ServerHandle.ActionTimer },
 
             };
         Debug.Log("Initialized packets.");

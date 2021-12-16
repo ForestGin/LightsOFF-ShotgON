@@ -55,6 +55,11 @@ public class PlayerController : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(ZoomAnim(false));
         }
+
+        if (gameObject.GetComponent<PlayerManager>().inGame)
+        {
+            readyText.gameObject.SetActive(false);
+        }
     }
 
     private void FixedUpdate()

@@ -17,6 +17,7 @@ public class PlayerManager : MonoBehaviour
     public MeshRenderer model;
 
     public bool isReady;
+    public bool inGame;
     
 
     public void Initialize(int _id, string _username, Color _color)

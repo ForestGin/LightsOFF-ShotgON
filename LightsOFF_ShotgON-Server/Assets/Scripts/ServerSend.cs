@@ -265,13 +265,35 @@ public class ServerSend
         }
     }
 
-    public static void GameStart(bool _gameStarted)
+    public static void GameStart(bool _gameStarted, int _gameTimeMinutes, int _actionTimeSeconds)
     {
         using (Packet _packet = new Packet((int)ServerPackets.gameStart))
         {
             _packet.Write(_gameStarted);
+            _packet.Write(_gameTimeMinutes);
+            _packet.Write(_actionTimeSeconds);
 
             SendTCPDataToAll(_packet);
+        }
+    }
+
+    public static void GameTimer(int _fromClient, float _currentGameTime)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.currentGameTime))
+        {
+            _packet.Write(_currentGameTime);
+
+            SendTCPData(_fromClient, _packet);
+        }
+    }
+
+    public static void ActionTimer(int _fromClient, float _currentActionTime)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.currentActionTime))
+        {
+            _packet.Write(_currentActionTime);
+
+            SendTCPData(_fromClient, _packet);
         }
     }
 

@@ -12,10 +12,13 @@ public class NetworkManager : MonoBehaviour
 
     private bool gameStarted = false;
 
+    //Timers
     public int gameTimeMinutes;
     private float currentGameTime;
     public int actionTimeSeconds;
     private float currentActionTime;
+
+    private float timeDifferenceThreshold;
 
     public GameObject playerPrefab;
 
@@ -38,6 +41,8 @@ public class NetworkManager : MonoBehaviour
         Application.targetFrameRate = 30;//Limiting framerate bc we don't need it
 
         Server.Start(50, 26950);
+
+        timeDifferenceThreshold = 0.05f; //0.1 bc its above and under
     }
 
     private void Update()
@@ -109,16 +114,21 @@ public class NetworkManager : MonoBehaviour
 
     public bool CheckAllPlayersReady()
     {
+        int _playersReady = 0;
         foreach(KeyValuePair<int, Client> entry in Server.clients)
         {
             if (entry.Value.player != null)
             {
                 if (entry.Value.player.currentPlayerGameState != Player.playerGameState.READY)
                 {
+                    //_playersReady++;
                     return false;
                 }
             }
         }
+
+        //if (_playersReady != numClients) return false;
+        //else return true;
         return true;
     }
 
@@ -135,6 +145,22 @@ public class NetworkManager : MonoBehaviour
                 entry.Value.player.currentPlayerGameState = Player.playerGameState.PLAYING;
             }
         }
-        ServerSend.GameStart(gameStarted);
+        ServerSend.GameStart(gameStarted, gameTimeMinutes, actionTimeSeconds);
+    }
+
+    public void GameTimerReconciliation(int _fromclient, float _currentGameTime)
+    {
+        if (_currentGameTime - currentGameTime > timeDifferenceThreshold || _currentGameTime - currentGameTime < timeDifferenceThreshold)
+        {
+            ServerSend.GameTimer(_fromclient, currentGameTime);
+        }
+    }
+
+    public void ActionTimerReconciliation(int _fromclient, float _currentActionTime)
+    {
+        if (_currentActionTime - currentActionTime > timeDifferenceThreshold || _currentActionTime - currentActionTime < timeDifferenceThreshold)
+        {
+            ServerSend.ActionTimer(_fromclient, currentActionTime);
+        }
     }
 }

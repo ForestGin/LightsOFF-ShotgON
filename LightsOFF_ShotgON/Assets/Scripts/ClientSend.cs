@@ -92,5 +92,27 @@ public class ClientSend : MonoBehaviour
             SendTCPData(_packet);
         }
     }
+
+    public static void GameTimer(float _currentGameTime)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.currentGameTime))
+        {
+            _packet.Write(_currentGameTime);
+
+            SendUDPData(_packet);
+        }
+    }
+
+    public static void ActionTimer(float _currentActionTime)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.currentActionTime))
+        {
+            _packet.Write(_currentActionTime);
+
+            SendUDPData(_packet);
+        }
+    }
+
+
     #endregion
 }

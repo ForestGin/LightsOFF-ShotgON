@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +20,17 @@ public class GameManager : MonoBehaviour
     private GameObject bullet3;
     private GameObject bullet4;
 
+    private bool gameStarted = false;
+
+    //Timers
+    public Text gameTimer;
+    public Text actionTimer;
+
+    public int gameTimeMinutes;
+    public float currentGameTime;
+    public int actionTimeSeconds;
+    public float currentActionTime;
+
     private void Awake()
     {
         if (instance == null)
@@ -32,13 +44,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //private void Update()
-    //{
-    //    if (Input.GetKey(KeyCode.Escape))
-    //    {
-    //        Client.instance.Disconnect();
-    //    }
-    //}
+    private void FixedUpdate()
+    {
+        if (gameStarted)
+        {
+            currentGameTime -= Time.deltaTime;
+            currentActionTime -= Time.deltaTime;
+
+            //Since we have server reconciliation this action time would reset anyways
+            //Action
+            if (currentActionTime <= 0)
+            {
+                //Resetting time
+                currentActionTime = actionTimeSeconds;
+            }
+
+            gameTimer.text = currentGameTime.ToString();
+            actionTimer.text = currentActionTime.ToString();
+
+            SendTimersToServer(currentGameTime, currentActionTime);
+        }
+    }
 
     /// <summary>Spawns a player.</summary>
     /// <param name="_id">The player's ID.</param>
@@ -92,5 +118,42 @@ public class GameManager : MonoBehaviour
     {
         Color _color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
         return _color;
+    }
+
+    public void GameStart(bool _gameStarted, int _gameTimeMinutes, int _actionTimeSeconds)
+    {
+        gameStarted = _gameStarted;
+        gameTimeMinutes = _gameTimeMinutes;
+        actionTimeSeconds = _actionTimeSeconds;
+
+        currentGameTime = gameTimeMinutes * 60;
+        currentActionTime = actionTimeSeconds;
+
+        gameTimer.gameObject.SetActive(true);
+        actionTimer.gameObject.SetActive(true);
+
+        gameTimer.text = currentGameTime.ToString();
+        actionTimer.text = currentActionTime.ToString();
+
+        foreach (KeyValuePair<int, PlayerManager> entry in players)
+        {
+            entry.Value.isReady = false;
+            entry.Value.inGame = true;
+        }
+    }
+    public void SendTimersToServer(float _currentGameTime, float _currentActionTime)
+    {
+        ClientSend.GameTimer(_currentGameTime);
+        ClientSend.ActionTimer(_currentActionTime);
+    }
+    
+    public void GameTimerReconciliation(float _currentGameTime)
+    {
+        currentGameTime = _currentGameTime;
+    }
+
+    public void ActionTimerReconciliation(float _currentActionTime)
+    {
+        currentActionTime = _currentActionTime;
     }
 }

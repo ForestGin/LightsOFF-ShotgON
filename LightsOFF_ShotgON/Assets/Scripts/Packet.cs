@@ -21,6 +21,8 @@ public enum ServerPackets
     itemPickedUp,
     bulletHit,
     gameStart,
+    currentGameTime,
+    currentActionTime,
 }
 
 /// <summary>Sent from client to server.</summary>
@@ -32,6 +34,8 @@ public enum ClientPackets
     chatMessage,
     playerShoot,
     playerReady,
+    currentGameTime,
+    currentActionTime,
 }
 
 public class Packet : IDisposable

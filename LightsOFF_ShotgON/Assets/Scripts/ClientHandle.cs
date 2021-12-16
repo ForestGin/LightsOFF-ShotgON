@@ -140,7 +140,23 @@ public class ClientHandle : MonoBehaviour
     public static void GameStart(Packet _packet)
     {
         bool _gameStarted = _packet.ReadBool();
+        int _gameTimeMinutes = _packet.ReadInt();
+        int _actionTimeSeconds = _packet.ReadInt();
 
-        //GameManager.instance.GameStart();
+        GameManager.instance.GameStart(_gameStarted, _gameTimeMinutes, _actionTimeSeconds);
+    }
+
+    public static void GameTimer(Packet _packet)
+    {
+        float _currentGameTime = _packet.ReadFloat();
+
+        GameManager.instance.GameTimerReconciliation(_currentGameTime);
+    }
+
+    public static void ActionTimer(Packet _packet)
+    {
+        float _currentActionTime = _packet.ReadFloat();
+
+        GameManager.instance.ActionTimerReconciliation(_currentActionTime);
     }
 }

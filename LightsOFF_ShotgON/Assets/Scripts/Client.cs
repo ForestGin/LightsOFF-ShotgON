@@ -308,7 +308,9 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.itemSpawned, ClientHandle.ItemSpawned },
             { (int)ServerPackets.itemPickedUp, ClientHandle.ItemPickedUp },
             { (int)ServerPackets.bulletHit, ClientHandle.BulletHit },
-            { (int)ServerPackets.gameStart, ClientHandle.GameStart }
+            { (int)ServerPackets.gameStart, ClientHandle.GameStart },
+            { (int)ServerPackets.currentGameTime, ClientHandle.GameTimer },
+            { (int)ServerPackets.currentActionTime, ClientHandle.ActionTimer },
 
 
         };
