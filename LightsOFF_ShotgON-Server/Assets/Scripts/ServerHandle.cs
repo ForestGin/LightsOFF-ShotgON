@@ -78,6 +78,31 @@ public class ServerHandle
         NetworkManager.instance.ActionTimerReconciliation(_fromClient, _currentActionTime);
     }
 
+    //public static void PlayerPosition(int _fromClient, Packet _packet)
+    //{
+    //    Vector3 _currentPosition = _packet.ReadVector3();
+
+    //    foreach (KeyValuePair<int, Client> entry in Server.clients)
+    //    {
+    //        if (entry.Value.player.id == _fromClient)
+    //        {
+    //            entry.Value.player.PlayerPositionReconciliation(_currentPosition);
+    //        }
+    //    }
+    //}
+
+    //public static void PlayerRotation(int _fromClient, Packet _packet)
+    //{
+    //    Quaternion _currentRotation = _packet.ReadQuaternion();
+
+    //    foreach (KeyValuePair<int, Client> entry in Server.clients)
+    //    {
+    //        if (entry.Value.player.id == _fromClient)
+    //        {
+    //            entry.Value.player.PlayerRotationReconciliation(_currentRotation);
+    //        }
+    //    }
+    //}
 
 
 }

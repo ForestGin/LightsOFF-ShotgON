@@ -135,6 +135,8 @@ public class Server
                 { (int)ClientPackets.playerReady, ServerHandle.PlayerReady },
                 { (int)ClientPackets.currentGameTime, ServerHandle.GameTimer },
                 { (int)ClientPackets.currentActionTime, ServerHandle.ActionTimer },
+                //{ (int)ClientPackets.playerPosition, ServerHandle.PlayerPosition },
+                //{ (int)ClientPackets.playerRotation, ServerHandle.PlayerRotation },
 
             };
         Debug.Log("Initialized packets.");

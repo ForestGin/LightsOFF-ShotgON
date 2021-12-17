@@ -40,19 +40,23 @@ public class Player : MonoBehaviour
     public int itemAmount = 0;
     public int maxItemAmount = 3;
 
-    private bool[] inputs;
-    private float yVelocity = 0;
+    public bool[] inputs;
+    public float yVelocity = 0;
 
 
     //Shoot
     public Transform spawnPoint;
     public GameObject muzzle;
     public GameObject impact;
+
+    //private float timeDifferenceThreshold;
+
     private void Start()
     {
         gravity *= Time.fixedDeltaTime * Time.fixedDeltaTime;
         moveSpeed *= Time.fixedDeltaTime;
         jumpSpeed *= Time.fixedDeltaTime;
+        //timeDifferenceThreshold = 0.05f;
     }
 
     public void Initialize(int _id, string _username, Color _color)
@@ -263,4 +267,36 @@ public class Player : MonoBehaviour
 
         return _coloredText;
     }
+
+    //public void PlayerPositionReconciliation(Vector3 _currentPosition)
+    //{
+    //    Vector3 difference = new Vector3(
+    //        Mathf.Abs(_currentPosition.x - this.transform.position.x),
+    //        Mathf.Abs(_currentPosition.y - this.transform.position.y),
+    //        Mathf.Abs(_currentPosition.z - this.transform.position.z));
+              
+    //    if (difference.x > timeDifferenceThreshold ||
+    //        difference.y > timeDifferenceThreshold ||
+    //        difference.z > timeDifferenceThreshold)
+    //    {
+    //        ServerSend.PlayerPosition(this);
+    //    }
+    //}
+
+    //public void PlayerRotationReconciliation(Quaternion _currentRotation)
+    //{
+    //    Quaternion difference = new Quaternion(
+    //        Mathf.Abs(_currentRotation.x - this.transform.rotation.x),
+    //        Mathf.Abs(_currentRotation.y - this.transform.rotation.y),
+    //        Mathf.Abs(_currentRotation.z - this.transform.rotation.z),
+    //        Mathf.Abs(_currentRotation.w - this.transform.rotation.w));
+
+    //    if (difference.x > timeDifferenceThreshold ||
+    //        difference.y > timeDifferenceThreshold ||
+    //        difference.z > timeDifferenceThreshold ||
+    //        difference.w > timeDifferenceThreshold)
+    //    {
+    //        ServerSend.PlayerRotation(this);
+    //    }
+    //}
 }

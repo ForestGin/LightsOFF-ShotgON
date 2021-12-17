@@ -98,8 +98,56 @@ public class PlayerController : MonoBehaviour
             }    
         }
 
+        //------------
+        
+        //Vector2 _inputDirection = Vector2.zero;
+        //if (Input.GetKey(KeyCode.W))
+        //{
+        //    _inputDirection.y += 1;
+        //}
+        //if (Input.GetKey(KeyCode.S))
+        //{
+        //    _inputDirection.y -= 1;
+        //}
+        //if (Input.GetKey(KeyCode.A))
+        //{
+        //    _inputDirection.x -= 1;
+        //}
+        //if (Input.GetKey(KeyCode.D))
+        //{
+        //    _inputDirection.x += 1;
+        //}
+
         SendInputToServer();
+
+        //Move(_inputDirection);
+        
+        
     }
+
+    //private void Move(Vector2 _inputDirection)
+    //{
+    //    Vector3 _moveDirection = transform.right * _inputDirection.x + transform.forward * _inputDirection.y;
+    //    _moveDirection *= gameObject.GetComponent<PlayerManager>().moveSpeed;
+
+    //    if (gameObject.GetComponent<CharacterController>().isGrounded)
+    //    {
+    //        gameObject.GetComponent<PlayerManager>().yVelocity = 0f;
+
+    //        if (Input.GetKey(KeyCode.Space))
+    //        {
+    //            gameObject.GetComponent<PlayerManager>().yVelocity = gameObject.GetComponent<PlayerManager>().jumpSpeed;
+    //        }
+    //    }
+    //    gameObject.GetComponent<PlayerManager>().yVelocity += gameObject.GetComponent<PlayerManager>().gravity;
+
+    //    _moveDirection.y = gameObject.GetComponent<PlayerManager>().yVelocity;
+    //    gameObject.GetComponent<CharacterController>().Move(_moveDirection);
+
+    //    //HACER CLIENT SENT
+    //    ClientSend.PlayerPosition(this);
+    //    ClientSend.PlayerRotation(this);
+    //}
 
     public void HandleChatMessage(string _message)
     {

@@ -79,7 +79,7 @@ public class ServerSend
     public static void Welcome(int _toClient, string _msg)
     {
         using (Packet _packet = new Packet((int)ServerPackets.welcome))
-        {
+        {           
             _packet.Write(_msg);
             _packet.Write(_toClient);
 
@@ -153,6 +153,11 @@ public class ServerSend
             _packet.Write(_player.color);
             _packet.Write(_player.transform.position);
             _packet.Write(_player.transform.rotation);
+            //_packet.Write(_player.gravity);
+            //_packet.Write(_player.jumpSpeed);
+            //_packet.Write(_player.moveSpeed);
+            //_packet.Write(_player.yVelocity);
+            //_packet.Write(_player.controller);
 
             SendTCPData(_toClient, _packet);
         }

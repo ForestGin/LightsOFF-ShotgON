@@ -150,7 +150,9 @@ public class NetworkManager : MonoBehaviour
 
     public void GameTimerReconciliation(int _fromclient, float _currentGameTime)
     {
-        if (_currentGameTime - currentGameTime > timeDifferenceThreshold || _currentGameTime - currentGameTime < timeDifferenceThreshold)
+        float difference = Mathf.Abs(_currentGameTime - currentGameTime);
+
+        if (difference > timeDifferenceThreshold)
         {
             ServerSend.GameTimer(_fromclient, currentGameTime);
         }
@@ -158,7 +160,9 @@ public class NetworkManager : MonoBehaviour
 
     public void ActionTimerReconciliation(int _fromclient, float _currentActionTime)
     {
-        if (_currentActionTime - currentActionTime > timeDifferenceThreshold || _currentActionTime - currentActionTime < timeDifferenceThreshold)
+        float difference = Mathf.Abs(_currentActionTime - currentActionTime);
+
+        if (difference > timeDifferenceThreshold)
         {
             ServerSend.ActionTimer(_fromclient, currentActionTime);
         }

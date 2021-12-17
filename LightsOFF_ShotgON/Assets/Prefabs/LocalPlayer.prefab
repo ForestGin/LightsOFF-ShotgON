@@ -1359,6 +1359,7 @@ GameObject:
   - component: {fileID: 8819256922348106597}
   - component: {fileID: 8283048436765457631}
   - component: {fileID: 6761221046541469059}
+  - component: {fileID: 4760628993958855431}
   m_Layer: 0
   m_Name: LocalPlayer
   m_TagString: Untagged
@@ -1404,6 +1405,7 @@ MonoBehaviour:
   itemCount: 0
   model: {fileID: 829117775900897876}
   isReady: 0
+  inGame: 0
 --- !u!114 &6761221046541469059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1428,6 +1430,24 @@ MonoBehaviour:
   shotgunAnimator: {fileID: 4470034557454928608}
   zoomInFieldOfView: 25
   mainCam: {fileID: 7455574231334980082}
+--- !u!143 &4760628993958855431
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7677484484946083636}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8344694473797022004
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,7 +18,12 @@ public class PlayerManager : MonoBehaviour
 
     public bool isReady;
     public bool inGame;
-    
+
+    //----Movement
+    //public float gravity;
+    //public float jumpSpeed;
+    //public float moveSpeed;
+    //public float yVelocity;
 
     public void Initialize(int _id, string _username, Color _color)
     {
@@ -28,6 +33,14 @@ public class PlayerManager : MonoBehaviour
         health = maxHealth;
         isReady = false;
     }
+
+    //public void SetMovement(float _gravity, float _jumpSpeed, float _moveSpeed, float _yVelocity)
+    //{
+    //    gravity = _gravity;
+    //    jumpSpeed = _jumpSpeed;
+    //    moveSpeed = _moveSpeed;
+    //    yVelocity = _yVelocity;
+    //}
 
     public void SetHealth(float _health)
     {

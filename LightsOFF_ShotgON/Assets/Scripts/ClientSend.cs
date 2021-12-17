@@ -20,6 +20,8 @@ public class ClientSend : MonoBehaviour
         Client.instance.udp.SendData(_packet);
     }
 
+
+
     #region Packets
     /// <summary>Lets the server know that the welcome message was received.</summary>
     public static void WelcomeReceived()
@@ -113,6 +115,30 @@ public class ClientSend : MonoBehaviour
         }
     }
 
+
+    //public static void PlayerPosition(PlayerController _player)
+    //{
+    //    using (Packet _packet = new Packet((int)ClientPackets.playerPosition))
+    //    {
+    //        //_packet.Write(_player.id);
+    //        _packet.Write(_player.transform.position);
+
+    //        SendUDPData(_packet);
+    //    }
+    //}
+
+    /// <summary>Sends a player's updated rotation to all clients except to himself (to avoid overwriting the local player's rotation).</summary>
+    /// <param name="_player">The player whose rotation to update.</param>
+    //public static void PlayerRotation(PlayerController _player)
+    //{
+    //    using (Packet _packet = new Packet((int)ClientPackets.playerRotation))
+    //    {
+    //        //_packet.Write(_player.id);
+    //        _packet.Write(_player.transform.rotation);
+
+    //        SendUDPData(_packet);
+    //    }
+    //}
 
     #endregion
 }

@@ -54,8 +54,14 @@ public class ClientHandle : MonoBehaviour
         Color _color = _packet.ReadColor(); 
         Vector3 _position = _packet.ReadVector3();
         Quaternion _rotation = _packet.ReadQuaternion();
+        //------------------
+        //CharacterController controller =_packet.Read PROBLEMA PARA LEER CHARACTER CONTROLLER, SERA MEJOR CREARLO EN EL PREFAB Y SCRIPT DEL CLIENTE
+        //float _gravity = _packet.ReadFloat();
+        //float _jumpSpeed = _packet.ReadFloat();
+        //float _moveSpeed = _packet.ReadFloat();
+        //float _yVelocity = _packet.ReadFloat();
 
-        GameManager.instance.SpawnPlayer(_id, _username, _color, _position, _rotation);
+        GameManager.instance.SpawnPlayer(_id, _username, _color, _position, _rotation/*, _gravity, _jumpSpeed, _moveSpeed, _yVelocity*/);
     }
 
     public static void PlayerPosition(Packet _packet)
