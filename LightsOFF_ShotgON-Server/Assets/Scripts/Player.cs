@@ -20,14 +20,6 @@ public class Player : MonoBehaviour
     }
     public playerGameState currentPlayerGameState;
 
-    public enum playerAction
-    {
-        SHOOT,
-        RELOAD,
-        SHIELD,
-    }
-    public playerAction currentPlayerAction;
-
     public bool isReady;
     
     public CharacterController controller;
@@ -47,6 +39,18 @@ public class Player : MonoBehaviour
     public Transform spawnPoint;
     public GameObject muzzle;
     public GameObject impact;
+
+    //Action
+    public enum playerAction
+    {
+        SHOOT,
+        RELOAD,
+        SHIELD,
+    }
+    public playerAction currentPlayerAction;
+
+    public int magazineSize;
+    public int currentMagazine;
 
     private void Start()
     {

@@ -76,7 +76,7 @@ public class NetworkManager : MonoBehaviour
                 {
                     if (entry.Value.player != null)
                     {
-                        //entry.Value.player.PerformAction();
+                        entry.Value.player.PerformAction();
                     }
                 }
 
@@ -112,24 +112,24 @@ public class NetworkManager : MonoBehaviour
         return numPlayers;
     }
 
-    public bool CheckAllPlayersReady()
+    public bool CheckAllPlayersReady()//This function does not work if players connect and then disconnect before readying(needs fix)
     {
         int _playersReady = 0;
         foreach(KeyValuePair<int, Client> entry in Server.clients)
         {
             if (entry.Value.player != null)
             {
-                if (entry.Value.player.currentPlayerGameState != Player.playerGameState.READY)
+                if (entry.Value.player.currentPlayerGameState == Player.playerGameState.READY)
                 {
-                    //_playersReady++;
-                    return false;
+                    _playersReady++;
+                    //return false;
                 }
             }
         }
 
-        //if (_playersReady != numClients) return false;
-        //else return true;
-        return true;
+        if (_playersReady != numClients) return false;
+        else return true;
+        //return true;
     }
 
     private void GameStart()
