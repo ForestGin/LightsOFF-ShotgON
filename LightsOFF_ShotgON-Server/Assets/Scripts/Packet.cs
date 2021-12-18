@@ -22,7 +22,8 @@ public enum ServerPackets
     bulletHit,
     gameStart,
     currentGameTime,
-    currentActionTime
+    currentActionTime,
+    currentPlayerAction,
 }
 
 /// <summary>Sent from client to server.</summary>

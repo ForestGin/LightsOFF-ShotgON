@@ -43,11 +43,15 @@ public class Player : MonoBehaviour
     //Action
     public enum playerAction
     {
-        SHOOT,
+        SHOOT = 1,
         RELOAD,
         SHIELD,
     }
     public playerAction currentPlayerAction;
+
+    private bool shoot;
+    private bool reload;
+    private bool shield;
 
     public int magazineSize;
     public int currentMagazine;
@@ -66,10 +70,15 @@ public class Player : MonoBehaviour
         color = _color;
         chatMessage = null;
         currentPlayerGameState = playerGameState.SPAWNING;
+        currentPlayerAction = playerAction.RELOAD;
+
+        shoot = false;
+        reload = false;
+        shield = false;
 
         health = maxHealth;
 
-        inputs = new bool[5];
+        inputs = new bool[8];
     }
 
     /// <summary>Processes player input and moves the player.</summary>
@@ -99,6 +108,26 @@ public class Player : MonoBehaviour
         }
 
         Move(_inputDirection);
+
+        //-----------------------------------------------------
+        if (inputs[5] && currentMagazine > 0)
+        {
+            currentPlayerAction = playerAction.SHOOT;
+
+            ServerSend.ActionSelected(id, currentPlayerAction);
+        }
+
+        if (inputs[6])
+        {
+            currentPlayerAction = playerAction.RELOAD;
+            ServerSend.ActionSelected(id, currentPlayerAction);
+        }
+
+        if (inputs[7])
+        {
+            currentPlayerAction = playerAction.SHIELD;
+            ServerSend.ActionSelected(id, currentPlayerAction);
+        }
     }
 
     /// <summary>Calculates the player's desired movement direction and moves him.</summary>
@@ -137,83 +166,88 @@ public class Player : MonoBehaviour
 
     public void Shoot(Vector3 _viewDirection)
     {
-        RaycastHit hit;
-        RaycastHit hit2;
-        RaycastHit hit3;
-        RaycastHit hit4;
-
-        //GameObject muzzleInstance = Instantiate(muzzle, spawnPoint.position, spawnPoint.localRotation);
-        //muzzleInstance.transform.parent = spawnPoint;
-
-        if (health <= 0f)
+        if (shoot || currentPlayerGameState != playerGameState.PLAYING)
         {
-            return;
-        }
+            RaycastHit hit;
+            RaycastHit hit2;
+            RaycastHit hit3;
+            RaycastHit hit4;
 
-        if (Physics.Raycast(shootOrigin.position, _viewDirection, out hit, 50f))
-        {
-            //Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
+            //GameObject muzzleInstance = Instantiate(muzzle, spawnPoint.position, spawnPoint.localRotation);
+            //muzzleInstance.transform.parent = spawnPoint;
 
-            if (hit.collider.CompareTag("Player"))
+            if (health <= 0f)
             {
-                //modify damage in function call to make it one shot 
-                hit.collider.GetComponent<Player>().TakeDamage(100f);
+                return;
             }
-        }
 
-        if (Physics.Raycast(shootOrigin.position, _viewDirection + new Vector3(-.05f, 0f, 0f), out hit2, 50f))
-        {
-            //Instantiate(impact, hit2.point, Quaternion.LookRotation(hit2.normal));
-
-            if (hit2.collider.CompareTag("Player"))
+            if (Physics.Raycast(shootOrigin.position, _viewDirection, out hit, 50f))
             {
-                //modify damage in function call to make it one shot 
-                hit2.collider.GetComponent<Player>().TakeDamage(100f);
+                //Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
+
+                if (hit.collider.CompareTag("Player"))
+                {
+                    //modify damage in function call to make it one shot 
+                    hit.collider.GetComponent<Player>().TakeDamage(100f);
+                }
             }
-        }
 
-        if (Physics.Raycast(shootOrigin.position, _viewDirection + new Vector3(0f, .05f, 0f), out hit3, 50f))
-        {
-            //Instantiate(impact, hit3.point, Quaternion.LookRotation(hit3.normal));
-
-            if (hit3.collider.CompareTag("Player"))
+            if (Physics.Raycast(shootOrigin.position, _viewDirection + new Vector3(-.05f, 0f, 0f), out hit2, 50f))
             {
-                //modify damage in function call to make it one shot 
-                hit3.collider.GetComponent<Player>().TakeDamage(100f);
+                //Instantiate(impact, hit2.point, Quaternion.LookRotation(hit2.normal));
+
+                if (hit2.collider.CompareTag("Player"))
+                {
+                    //modify damage in function call to make it one shot 
+                    hit2.collider.GetComponent<Player>().TakeDamage(100f);
+                }
             }
-        }
 
-        if (Physics.Raycast(shootOrigin.position, _viewDirection + new Vector3(0f, -.05f, 0f), out hit4, 50f))
-        {
-            //Instantiate(impact, hit4.point, Quaternion.LookRotation(hit4.normal));
-
-            if (hit4.collider.CompareTag("Player"))
+            if (Physics.Raycast(shootOrigin.position, _viewDirection + new Vector3(0f, .05f, 0f), out hit3, 50f))
             {
-                //modify damage in function call to make it one shot 
-                hit4.collider.GetComponent<Player>().TakeDamage(100f);
-            }
-        }
+                //Instantiate(impact, hit3.point, Quaternion.LookRotation(hit3.normal));
 
-        ServerSend.BulletHit(hit, hit2, hit3, hit4);
+                if (hit3.collider.CompareTag("Player"))
+                {
+                    //modify damage in function call to make it one shot 
+                    hit3.collider.GetComponent<Player>().TakeDamage(100f);
+                }
+            }
+
+            if (Physics.Raycast(shootOrigin.position, _viewDirection + new Vector3(0f, -.05f, 0f), out hit4, 50f))
+            {
+                //Instantiate(impact, hit4.point, Quaternion.LookRotation(hit4.normal));
+
+                if (hit4.collider.CompareTag("Player"))
+                {
+                    //modify damage in function call to make it one shot 
+                    hit4.collider.GetComponent<Player>().TakeDamage(100f);
+                }
+            }
+
+            ServerSend.BulletHit(hit, hit2, hit3, hit4);
+        }
     }
 
     public void TakeDamage(float _damage)
     {
-        if (health <= 0)
+        if (!shield && currentPlayerGameState == playerGameState.PLAYING)//Can only be damaged when playing and does not have shield activated
         {
-            return;
-        }
+            if (health <= 0)
+            {
+                return;
+            }
 
-        health -= _damage;
-        if (health <= 0f)
-        {
-            health = 0f;
-            controller.enabled = false;
-            transform.position = new Vector3(0f, 25f, 0f);
-            ServerSend.PlayerPosition(this);
-            StartCoroutine(Respawn());
+            health -= _damage;
+            if (health <= 0f)
+            {
+                health = 0f;
+                controller.enabled = false;
+                transform.position = new Vector3(0f, 25f, 0f);
+                ServerSend.PlayerPosition(this);
+                StartCoroutine(Respawn());
+            }
         }
-
         ServerSend.PlayerHealth(this);
     }
 
@@ -262,7 +296,33 @@ public class Player : MonoBehaviour
 
     public void PerformAction()
     {
+        if (currentMagazine == 0 && currentPlayerAction == playerAction.SHOOT) currentPlayerAction = playerAction.RELOAD;
 
+        switch (currentPlayerAction)
+        {
+            case playerAction.SHOOT:
+                shoot = true;
+                reload = false;
+                shield = false;
+                currentMagazine--;
+                //ServerSend. SOMETHING TO TRIGGER "YOU CAN SHOOT" ANIMATION TO VISUALLY REPRESENT
+                break;
+            case playerAction.RELOAD:
+                shoot = false;
+                reload = true;
+                shield = false;
+                currentMagazine++;
+                //ServerSend. SOMETHING TO TRIGGER RELOAD ANIMATION TO VISUALLY REPRESENT
+                break;
+            case playerAction.SHIELD:
+                shoot = false;
+                reload = false;
+                shield = true;
+                //ServerSend. SOMETHING TO TRIGGER SHIELD TO VISUALLY REPRESENT
+                break;
+            default:
+                break;
+        }
     }
 
     public string ColorText(Color _color, string _text)

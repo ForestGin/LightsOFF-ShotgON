@@ -25,8 +25,8 @@ public class ClientHandle : MonoBehaviour
 
         Debug.Log($"Chat message recieved: {_msg}");
 
-        GameObject _player = GameObject.Find("LocalPlayer(Clone)");
-        
+        GameObject _player = GameObject.Find("LocalPlayer(Clone)");//this needs to be revised
+
         if (_player != null)
         {
             _player.GetComponent<PlayerController>().HandleChatMessage(_msg);
@@ -39,7 +39,7 @@ public class ClientHandle : MonoBehaviour
 
         Debug.Log($"Server chat message recieved: {_msg}");
 
-        GameObject _player = GameObject.Find("LocalPlayer(Clone)");
+        GameObject _player = GameObject.Find("LocalPlayer(Clone)");//this needs to be revised
 
         if (_player != null)
         {
@@ -164,5 +164,13 @@ public class ClientHandle : MonoBehaviour
         float _currentActionTime = _packet.ReadFloat();
 
         GameManager.instance.ActionTimerReconciliation(_currentActionTime);
+    }
+
+    public static void ActionSelected(Packet _packet)
+    {
+        int _byPlayer = _packet.ReadInt();
+        int _currentPlayerAction = _packet.ReadInt();
+
+        GameManager.players[_byPlayer].gameObject.GetComponent<PlayerController>().currentPlayerAction = (PlayerController.playerAction)_currentPlayerAction;
     }
 }

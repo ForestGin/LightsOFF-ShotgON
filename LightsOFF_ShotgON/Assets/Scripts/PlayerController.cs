@@ -29,6 +29,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Camera mainCam;
     //public GameObject impact;
 
+    //Action
+    public enum playerAction
+    {
+        SHOOT = 1,
+        RELOAD,
+        SHIELD,
+    }
+    public playerAction currentPlayerAction;
+    public Image imageShoot;
+    public Image imageReload;
+    public Image imageShield;
+
     private void Start()
     {
         baseFieldOfView = mainCam.fieldOfView;
@@ -56,9 +68,45 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(ZoomAnim(false));
         }
 
+        if (Input.GetKeyDown(KeyCode.R) && !pressedReady)//for now you can't "unready"
+        {
+            pressedReady = true;
+            pressReadyText.gameObject.SetActive(false);
+            readyText.gameObject.SetActive(true);
+
+            SendReady();
+        }
+
         if (gameObject.GetComponent<PlayerManager>().inGame)
         {
-            readyText.gameObject.SetActive(false);
+            if (readyText.gameObject.activeSelf)
+            {
+                readyText.gameObject.SetActive(false);
+            }
+
+            Color selected = new Color(1f, 1f, 1f, 1f);
+            Color unselected = new Color(1f, 1f, 1f, 0.4f);
+
+            switch (currentPlayerAction)
+            {
+                case playerAction.SHOOT:
+                    imageShoot.color = selected;
+                    imageReload.color = unselected;
+                    imageShield.color = unselected;
+                    break;
+                case playerAction.RELOAD:
+                    imageShoot.color = unselected;
+                    imageReload.color = selected;
+                    imageShield.color = unselected;
+                    break;
+                case playerAction.SHIELD:
+                    imageShoot.color = unselected;
+                    imageReload.color = unselected;
+                    imageShield.color = selected;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -83,21 +131,6 @@ public class PlayerController : MonoBehaviour
                 rend.material.color = gameObject.GetComponent<PlayerManager>().color;
             }   
         }
-        else
-        {
-            if(!pressedReady)//for now you can't "unready"
-            {
-                if (Input.GetKeyDown(KeyCode.R))
-                {
-                    pressedReady = true;
-                    pressReadyText.gameObject.SetActive(false);
-                    readyText.gameObject.SetActive(true);
-
-                    SendReady();
-                }
-            }    
-        }
-
         //------------
         
         //Vector2 _inputDirection = Vector2.zero;
@@ -182,6 +215,10 @@ public class PlayerController : MonoBehaviour
             Input.GetKey(KeyCode.A),
             Input.GetKey(KeyCode.D),
             Input.GetKey(KeyCode.Space),
+            //Input.GetKey(KeyCode.R),//do that eventually
+            Input.GetKey(KeyCode.Alpha1),
+            Input.GetKey(KeyCode.Alpha2),
+            Input.GetKey(KeyCode.Alpha3)
         };
 
         

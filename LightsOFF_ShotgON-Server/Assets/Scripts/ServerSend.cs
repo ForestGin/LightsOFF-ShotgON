@@ -282,23 +282,34 @@ public class ServerSend
         }
     }
 
-    public static void GameTimer(int _fromClient, float _currentGameTime)
+    public static void GameTimer(int _toClient, float _currentGameTime)
     {
         using (Packet _packet = new Packet((int)ServerPackets.currentGameTime))
         {
             _packet.Write(_currentGameTime);
 
-            SendTCPData(_fromClient, _packet);
+            SendTCPData(_toClient, _packet);
         }
     }
 
-    public static void ActionTimer(int _fromClient, float _currentActionTime)
+    public static void ActionTimer(int _toClient, float _currentActionTime)
     {
         using (Packet _packet = new Packet((int)ServerPackets.currentActionTime))
         {
             _packet.Write(_currentActionTime);
 
-            SendTCPData(_fromClient, _packet);
+            SendTCPData(_toClient, _packet);
+        }
+    }
+
+    public static void ActionSelected(int _toClient, Player.playerAction _currentPlayerAction)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.currentPlayerAction))
+        {
+            _packet.Write(_toClient);
+            _packet.Write((int)_currentPlayerAction);
+
+            SendTCPData(_toClient, _packet);
         }
     }
 
