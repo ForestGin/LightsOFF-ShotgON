@@ -46,6 +46,7 @@ public class Player : MonoBehaviour
         SHOOT = 1,
         RELOAD,
         SHIELD,
+        NONE
     }
     public playerAction currentPlayerAction;
 
@@ -61,6 +62,7 @@ public class Player : MonoBehaviour
         gravity *= Time.fixedDeltaTime * Time.fixedDeltaTime;
         moveSpeed *= Time.fixedDeltaTime;
         jumpSpeed *= Time.fixedDeltaTime;
+        currentPlayerAction = playerAction.NONE;
     }
 
     public void Initialize(int _id, string _username, Color _color)
@@ -70,7 +72,7 @@ public class Player : MonoBehaviour
         color = _color;
         chatMessage = null;
         currentPlayerGameState = playerGameState.SPAWNING;
-        currentPlayerAction = playerAction.RELOAD;
+        currentPlayerAction = playerAction.NONE;
 
         shoot = false;
         reload = false;
@@ -112,12 +114,11 @@ public class Player : MonoBehaviour
         //-----------------------------------------------------
         if (inputs[5] && currentMagazine > 0)
         {
-            currentPlayerAction = playerAction.SHOOT;
-
+            currentPlayerAction = playerAction.SHOOT;         
             ServerSend.ActionSelected(id, currentPlayerAction);
         }
 
-        if (inputs[6])
+        if (inputs[6] && currentMagazine < 5)
         {
             currentPlayerAction = playerAction.RELOAD;
             ServerSend.ActionSelected(id, currentPlayerAction);
@@ -296,7 +297,8 @@ public class Player : MonoBehaviour
 
     public void PerformAction()
     {
-        if (currentMagazine == 0 && currentPlayerAction == playerAction.SHOOT) currentPlayerAction = playerAction.RELOAD;
+        //if (currentMagazine == 0 && currentPlayerAction == playerAction.SHOOT) 
+        //    currentPlayerAction = playerAction.RELOAD;
 
         switch (currentPlayerAction)
         {
@@ -304,15 +306,19 @@ public class Player : MonoBehaviour
                 shoot = true;
                 reload = false;
                 shield = false;
-                currentMagazine--;
+                if(currentMagazine >= 1)
+                    currentMagazine--;
                 //ServerSend. SOMETHING TO TRIGGER "YOU CAN SHOOT" ANIMATION TO VISUALLY REPRESENT
+                ServerSend.CurrentMagazine(id, this);
                 break;
             case playerAction.RELOAD:
                 shoot = false;
                 reload = true;
                 shield = false;
-                currentMagazine++;
+                if(currentMagazine <= 4)
+                    currentMagazine++;
                 //ServerSend. SOMETHING TO TRIGGER RELOAD ANIMATION TO VISUALLY REPRESENT
+                ServerSend.CurrentMagazine(id, this);
                 break;
             case playerAction.SHIELD:
                 shoot = false;

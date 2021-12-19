@@ -24,6 +24,7 @@ public enum ServerPackets
     currentGameTime,
     currentActionTime,
     currentPlayerAction,
+    currentMagazine
 }
 
 /// <summary>Sent from client to server.</summary>

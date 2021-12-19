@@ -173,4 +173,12 @@ public class ClientHandle : MonoBehaviour
 
         GameManager.players[_byPlayer].gameObject.GetComponent<PlayerController>().currentPlayerAction = (PlayerController.playerAction)_currentPlayerAction;
     }
+
+    public static void CurrentMagazine(Packet _packet)
+    {
+        int _byPlayer = _packet.ReadInt();
+        int _currentMagazine = _packet.ReadInt();
+
+        GameManager.players[_byPlayer].gameObject.GetComponent<PlayerController>().currentMagazine = _currentMagazine;
+    }
 }
