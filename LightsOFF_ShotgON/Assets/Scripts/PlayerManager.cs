@@ -22,11 +22,18 @@ public class PlayerManager : MonoBehaviour
     public MeshRenderer Shield;
     public bool shieldActive;
 
+
+    //----Jitter Fix
+    private Vector3 fromPos = Vector3.zero;
+    private Vector3 toPos = Vector3.zero;
+    private float lastTime;
+
     //----Movement
     //public float gravity;
     //public float jumpSpeed;
     //public float moveSpeed;
     //public float yVelocity;
+
 
     public void Initialize(int _id, string _username, Color _color)
     {
@@ -74,6 +81,18 @@ public class PlayerManager : MonoBehaviour
             Shield.enabled = true;
         else
             Shield.enabled = false;
+    }
+
+    public void SetPosition(Vector3 position)
+    {
+        fromPos = toPos;
+        toPos = position;
+        lastTime = Time.time;
+    }
+
+    private void Update()
+    {
+        this.transform.position = Vector3.Lerp(fromPos, toPos, (Time.time - lastTime) / (1.0f / Constants.TICKS_PER_SEC));
     }
 
 }
