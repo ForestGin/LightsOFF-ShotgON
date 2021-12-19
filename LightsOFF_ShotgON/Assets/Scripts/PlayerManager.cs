@@ -18,6 +18,7 @@ public class PlayerManager : MonoBehaviour
 
     public bool isReady;
     public bool inGame;
+    public bool inGameEnd;
 
     public MeshRenderer Shield;
     public bool shieldActive;

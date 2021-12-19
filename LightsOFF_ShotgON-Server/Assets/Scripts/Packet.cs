@@ -21,6 +21,7 @@ public enum ServerPackets
     itemPickedUp,
     bulletHit,
     gameStart,
+    gameEnd,
     currentGameTime,
     currentActionTime,
     currentPlayerAction,

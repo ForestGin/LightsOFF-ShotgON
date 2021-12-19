@@ -125,6 +125,15 @@ public class PlayerController : MonoBehaviour
                     break;
             }
         }
+        if (gameObject.GetComponent<PlayerManager>().inGameEnd)
+        {
+            gameObject.GetComponent<PlayerManager>().inGameEnd = false;
+
+            pressReadyText.gameObject.SetActive(true);
+            readyText.gameObject.SetActive(false);
+
+            pressedReady = false;
+        }
 
         UpdateBulletsImage(currentMagazine);
     }

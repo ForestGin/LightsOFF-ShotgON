@@ -152,6 +152,12 @@ public class ClientHandle : MonoBehaviour
 
         GameManager.instance.GameStart(_gameStarted, _gameTimeMinutes, _actionTimeSeconds);
     }
+    public static void GameEnd(Packet _packet)
+    {
+        bool _gameStarted = _packet.ReadBool();
+
+        GameManager.instance.GameEnd(_gameStarted);
+    }
 
     public static void GameTimer(Packet _packet)
     {

@@ -282,6 +282,16 @@ public class ServerSend
         }
     }
 
+    public static void GameEnd(bool _gameStarted)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.gameEnd))
+        {
+            _packet.Write(_gameStarted);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
     public static void GameTimer(int _toClient, float _currentGameTime)
     {
         using (Packet _packet = new Packet((int)ServerPackets.currentGameTime))

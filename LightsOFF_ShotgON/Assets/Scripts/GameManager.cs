@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -51,16 +52,18 @@ public class GameManager : MonoBehaviour
             currentGameTime -= Time.deltaTime;
             currentActionTime -= Time.deltaTime;
 
-            //Since we have server reconciliation this action time would reset anyways
+            //Since we have "server reconciliation" this action time would reset anyways
             //Action
             if (currentActionTime <= 0)
             {
                 //Resetting time
                 currentActionTime = actionTimeSeconds;
             }
-
-            gameTimer.text = currentGameTime.ToString();
-            actionTimer.text = currentActionTime.ToString();
+            TimeSpan gameTime = TimeSpan.FromSeconds(currentGameTime);
+            TimeSpan actionTime = TimeSpan.FromSeconds(currentActionTime);        
+            
+            gameTimer.text = gameTime.Minutes.ToString() + ":" + gameTime.Seconds.ToString();
+            actionTimer.text = actionTime.Minutes.ToString() + ":" + actionTime.Seconds.ToString();
 
             SendTimersToServer(currentGameTime, currentActionTime);
         }
@@ -118,7 +121,7 @@ public class GameManager : MonoBehaviour
     }
     public Color RandomColor()
     {
-        Color _color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        Color _color = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
         return _color;
     }
 
@@ -143,6 +146,27 @@ public class GameManager : MonoBehaviour
             entry.Value.inGame = true;
         }
     }
+
+    public void GameEnd(bool _gameStarted)
+    {
+        gameStarted = _gameStarted;
+
+        currentGameTime = 0f;
+        currentActionTime = 0f;
+
+        gameTimer.gameObject.SetActive(false);
+        actionTimer.gameObject.SetActive(false);
+
+        foreach (KeyValuePair<int, PlayerManager> entry in players)
+        {
+            entry.Value.isReady = false;
+            entry.Value.inGame = false;
+            entry.Value.inGameEnd = true;
+
+            //entry.Value.SetHealth(0f);
+        }
+    }
+
     public void SendTimersToServer(float _currentGameTime, float _currentActionTime)
     {
         ClientSend.GameTimer(_currentGameTime);

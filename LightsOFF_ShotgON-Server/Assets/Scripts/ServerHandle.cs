@@ -60,7 +60,11 @@ public class ServerHandle
         bool _isReady = _packet.ReadBool();
 
         //Reads content of bool and sets player state (for now can only be set to ready and can't be unset)
-        if (_isReady) Server.clients[_fromClient].player.currentPlayerGameState = Player.playerGameState.READY;
+        if (_isReady)
+        {
+            Server.clients[_fromClient].player.currentPlayerGameState = Player.playerGameState.READY;
+            Debug.Log("Player " + Server.clients[_fromClient].player.id.ToString() + " is now ready!");
+        }
         else Server.clients[_fromClient].player.currentPlayerGameState = Player.playerGameState.SPAWNED;
     }
 

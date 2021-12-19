@@ -309,14 +309,13 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.itemPickedUp, ClientHandle.ItemPickedUp },
             { (int)ServerPackets.bulletHit, ClientHandle.BulletHit },
             { (int)ServerPackets.gameStart, ClientHandle.GameStart },
+            { (int)ServerPackets.gameEnd, ClientHandle.GameEnd },
             { (int)ServerPackets.currentGameTime, ClientHandle.GameTimer },
             { (int)ServerPackets.currentActionTime, ClientHandle.ActionTimer },
             { (int)ServerPackets.currentPlayerAction, ClientHandle.ActionSelected },
             { (int)ServerPackets.currentMagazine, ClientHandle.CurrentMagazine },
             { (int)ServerPackets.shieldFeedback, ClientHandle.ShieldFeedback },
             { (int)ServerPackets.playerShoot, ClientHandle.PlayerShoot },
-
-
         };
         Debug.Log("Initialized packets.");
     }

@@ -84,6 +84,10 @@ public class NetworkManager : MonoBehaviour
                 currentActionTime = actionTimeSeconds;
             }
 
+            if (currentGameTime <= 0)
+            {
+                GameEnd();
+            }
             //ServerSend.GameTimer();
             //ServerSend.ActionTimer();
         }
@@ -145,7 +149,24 @@ public class NetworkManager : MonoBehaviour
                 entry.Value.player.currentPlayerGameState = Player.playerGameState.PLAYING;
             }
         }
+        Debug.Log("Game Started with " + gameTimeMinutes.ToString() + " minutes of game time and " + actionTimeSeconds.ToString() + " seconds between actions");
         ServerSend.GameStart(gameStarted, gameTimeMinutes, actionTimeSeconds);
+    }
+
+    private void GameEnd()
+    {
+        gameStarted = false;
+
+        foreach (KeyValuePair<int, Client> entry in Server.clients)
+        {
+            if (entry.Value.player != null)
+            {
+                entry.Value.player.TakeDamage(entry.Value.player.maxHealth);
+                entry.Value.player.currentPlayerGameState = Player.playerGameState.SPAWNED;
+            }
+        }
+        Debug.Log("Game Ended, players now will respawn and will be able to play again");
+        ServerSend.GameEnd(gameStarted);
     }
 
     public void GameTimerReconciliation(int _fromclient, float _currentGameTime)
