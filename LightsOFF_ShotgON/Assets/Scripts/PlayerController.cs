@@ -35,16 +35,33 @@ public class PlayerController : MonoBehaviour
         SHOOT = 1,
         RELOAD,
         SHIELD,
+        NONE
     }
+
     public playerAction currentPlayerAction;
     public Image imageShoot;
     public Image imageReload;
     public Image imageShield;
 
+    public Image imageBullet1;
+    public Image imageBullet2;
+    public Image imageBullet3;
+    public Image imageBullet4;
+    public Image imageBullet5;
+    public int currentMagazine;
+
     private void Start()
     {
         baseFieldOfView = mainCam.fieldOfView;
         Cursor.visible = false;
+        currentPlayerAction = playerAction.NONE;
+        Color unselected = new Color(1f, 1f, 1f, 0.4f);
+        imageShoot.color = unselected;
+        imageReload.color = unselected;
+        imageShield.color = unselected;
+
+        currentMagazine = 0;
+        UpdateBulletsImage(currentMagazine);
     }
     private void Update()
     {
@@ -108,6 +125,8 @@ public class PlayerController : MonoBehaviour
                     break;
             }
         }
+
+        UpdateBulletsImage(currentMagazine);
     }
 
     private void FixedUpdate()
@@ -248,6 +267,58 @@ public class PlayerController : MonoBehaviour
             mainCam.fieldOfView = currentFieldOfView;
             elapsed += Time.deltaTime;
             yield return null;
+        }
+    }
+
+    public void UpdateBulletsImage(int currentMagazine)
+    {
+        Color selected = new Color(1f, 1f, 1f, 1f);
+        Color unselected = new Color(1f, 1f, 1f, 0.4f);
+
+        switch (currentMagazine)
+        {
+            case 0:
+                imageBullet1.color = unselected;
+                imageBullet2.color = unselected;
+                imageBullet3.color = unselected;
+                imageBullet4.color = unselected;
+                imageBullet5.color = unselected;
+                break;
+            case 1:
+                imageBullet1.color = selected;
+                imageBullet2.color = unselected;
+                imageBullet3.color = unselected;
+                imageBullet4.color = unselected;
+                imageBullet5.color = unselected;
+                break;
+            case 2:
+                imageBullet1.color = selected;
+                imageBullet2.color = selected;
+                imageBullet3.color = unselected;
+                imageBullet4.color = unselected;
+                imageBullet5.color = unselected;
+                break;
+            case 3:
+                imageBullet1.color = selected;
+                imageBullet2.color = selected;
+                imageBullet3.color = selected;
+                imageBullet4.color = unselected;
+                imageBullet5.color = unselected;
+                break;
+            case 4:
+                imageBullet1.color = selected;
+                imageBullet2.color = selected;
+                imageBullet3.color = selected;
+                imageBullet4.color = selected;
+                imageBullet5.color = unselected;
+                break;
+            case 5:
+                imageBullet1.color = selected;
+                imageBullet2.color = selected;
+                imageBullet3.color = selected;
+                imageBullet4.color = selected;
+                imageBullet5.color = selected;
+                break;
         }
     }
 }

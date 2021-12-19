@@ -313,5 +313,16 @@ public class ServerSend
         }
     }
 
+    public static void CurrentMagazine(int _toClient, Player _player)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.currentMagazine))
+        {
+            _packet.Write(_toClient);
+            _packet.Write(_player.currentMagazine);
+
+            SendTCPData(_toClient, _packet);
+        }
+    }
+
     #endregion
 }
