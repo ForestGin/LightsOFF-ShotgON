@@ -253,6 +253,12 @@ public class Client
     /// <summary>Disconnects the client and stops all network traffic.</summary>
     private void Disconnect()
     {
+        //Handle player disconnection with the game started
+        if (NetworkManager.instance.gameStarted)
+        {
+            NetworkManager.instance.GameEnd();
+        }
+
         ThreadManager.ExecuteOnMainThread(() =>
         {
             UnityEngine.Object.Destroy(player.gameObject);

@@ -59,11 +59,12 @@ public class GameManager : MonoBehaviour
                 //Resetting time
                 currentActionTime = actionTimeSeconds;
             }
+
             TimeSpan gameTime = TimeSpan.FromSeconds(currentGameTime);
             TimeSpan actionTime = TimeSpan.FromSeconds(currentActionTime);        
             
             gameTimer.text = gameTime.Minutes.ToString() + ":" + gameTime.Seconds.ToString();
-            actionTimer.text = actionTime.Minutes.ToString() + ":" + actionTime.Seconds.ToString();
+            actionTimer.text = actionTime.Seconds.ToString();
 
             SendTimersToServer(currentGameTime, currentActionTime);
         }

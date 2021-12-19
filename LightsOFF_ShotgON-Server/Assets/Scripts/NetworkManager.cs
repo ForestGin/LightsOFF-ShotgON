@@ -10,7 +10,7 @@ public class NetworkManager : MonoBehaviour
 
     public int minPlayersToStart;
 
-    private bool gameStarted = false;
+    public bool gameStarted = false;
 
     //Timers
     public int gameTimeMinutes;
@@ -153,7 +153,7 @@ public class NetworkManager : MonoBehaviour
         ServerSend.GameStart(gameStarted, gameTimeMinutes, actionTimeSeconds);
     }
 
-    private void GameEnd()
+    public void GameEnd()
     {
         gameStarted = false;
 
