@@ -19,6 +19,9 @@ public class PlayerManager : MonoBehaviour
     public bool isReady;
     public bool inGame;
 
+    public MeshRenderer Shield;
+    public bool shieldActive;
+
     //----Movement
     //public float gravity;
     //public float jumpSpeed;
@@ -32,6 +35,8 @@ public class PlayerManager : MonoBehaviour
         color = _color;
         health = maxHealth;
         isReady = false;
+
+        Shield.enabled = false;
     }
 
     //public void SetMovement(float _gravity, float _jumpSpeed, float _moveSpeed, float _yVelocity)
@@ -62,4 +67,13 @@ public class PlayerManager : MonoBehaviour
         model.enabled = true;
         SetHealth(maxHealth);
     }
+
+    public void ShieldActive(bool active)
+    {
+        if (active)
+            Shield.enabled = true;
+        else
+            Shield.enabled = false;
+    }
+
 }

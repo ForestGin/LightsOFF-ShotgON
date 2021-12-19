@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     public Image imageBullet5;
     public int currentMagazine;
 
+   
     private void Start()
     {
         baseFieldOfView = mainCam.fieldOfView;
@@ -67,11 +68,8 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            //instantiate shoot particle
-            GameObject muzzleInstance = Instantiate(muzzle, spawnPoint.position, spawnPoint.localRotation);
-            muzzleInstance.transform.parent = spawnPoint;
-
-            ClientSend.PlayerShoot(camTransform.forward);
+            if(!gameObject.GetComponent<PlayerManager>().inGame)
+                Shoot();
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
@@ -120,6 +118,8 @@ public class PlayerController : MonoBehaviour
                     imageShoot.color = unselected;
                     imageReload.color = unselected;
                     imageShield.color = selected;
+                    
+                    
                     break;
                 default:
                     break;
@@ -320,5 +320,14 @@ public class PlayerController : MonoBehaviour
                 imageBullet5.color = selected;
                 break;
         }
+    }
+
+    public void Shoot()
+    {
+        //instantiate shoot particle
+        GameObject muzzleInstance = Instantiate(muzzle, spawnPoint.position, spawnPoint.localRotation);
+        muzzleInstance.transform.parent = spawnPoint;
+
+        ClientSend.PlayerShoot(camTransform.forward);
     }
 }

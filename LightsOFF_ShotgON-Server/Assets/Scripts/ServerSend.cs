@@ -324,5 +324,26 @@ public class ServerSend
         }
     }
 
+    public static void ShieldFeedback(int _toClient, Player _player)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.shieldFeedback))
+        {
+            _packet.Write(_toClient);
+            _packet.Write(_player.shield);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
+    public static void PlayerShoot(int _toClient)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.playerShoot))
+        {
+            _packet.Write(_toClient);
+
+            SendTCPData(_toClient, _packet);
+        }
+    }
+
     #endregion
 }

@@ -181,4 +181,19 @@ public class ClientHandle : MonoBehaviour
 
         GameManager.players[_byPlayer].gameObject.GetComponent<PlayerController>().currentMagazine = _currentMagazine;
     }
+
+    public static void ShieldFeedback(Packet _packet)
+    {
+        int _byPlayer = _packet.ReadInt();
+        bool _shieldActive = _packet.ReadBool();
+
+        GameManager.players[_byPlayer].ShieldActive(_shieldActive);
+    }
+
+    public static void PlayerShoot(Packet _packet)
+    {
+        int _byPlayer = _packet.ReadInt();
+        GameManager.players[_byPlayer].gameObject.GetComponent<PlayerController>().Shoot();
+        
+    }
 }

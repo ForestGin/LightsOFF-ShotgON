@@ -313,6 +313,8 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.currentActionTime, ClientHandle.ActionTimer },
             { (int)ServerPackets.currentPlayerAction, ClientHandle.ActionSelected },
             { (int)ServerPackets.currentMagazine, ClientHandle.CurrentMagazine },
+            { (int)ServerPackets.shieldFeedback, ClientHandle.ShieldFeedback },
+            { (int)ServerPackets.playerShoot, ClientHandle.PlayerShoot },
 
 
         };

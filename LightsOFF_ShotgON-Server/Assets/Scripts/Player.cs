@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
 
     private bool shoot;
     private bool reload;
-    private bool shield;
+    public bool shield;
 
     public int magazineSize;
     public int currentMagazine;
@@ -306,10 +306,16 @@ public class Player : MonoBehaviour
                 shoot = true;
                 reload = false;
                 shield = false;
-                if(currentMagazine >= 1)
-                    currentMagazine--;
+                
                 //ServerSend. SOMETHING TO TRIGGER "YOU CAN SHOOT" ANIMATION TO VISUALLY REPRESENT
+                ServerSend.ShieldFeedback(id, this);
+                if (currentMagazine >= 1)
+                {
+                    ServerSend.PlayerShoot(id);
+                    currentMagazine--;
+                }
                 ServerSend.CurrentMagazine(id, this);
+
                 break;
             case playerAction.RELOAD:
                 shoot = false;
@@ -318,13 +324,16 @@ public class Player : MonoBehaviour
                 if(currentMagazine <= 4)
                     currentMagazine++;
                 //ServerSend. SOMETHING TO TRIGGER RELOAD ANIMATION TO VISUALLY REPRESENT
+                ServerSend.ShieldFeedback(id, this);
                 ServerSend.CurrentMagazine(id, this);
+                
                 break;
             case playerAction.SHIELD:
                 shoot = false;
                 reload = false;
                 shield = true;
                 //ServerSend. SOMETHING TO TRIGGER SHIELD TO VISUALLY REPRESENT
+                ServerSend.ShieldFeedback(id, this);
                 break;
             default:
                 break;
