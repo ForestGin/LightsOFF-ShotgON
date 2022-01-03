@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     //Shoot
     public Transform spawnPoint;
     public GameObject muzzle;
+    public Transform shellPoint;
+    public GameObject shell;
     [SerializeField] private WeaponAnimator shotgunAnimator;
     [SerializeField] private float zoomInFieldOfView;
     private float baseFieldOfView;
@@ -336,6 +338,9 @@ public class PlayerController : MonoBehaviour
         //instantiate shoot particle
         GameObject muzzleInstance = Instantiate(muzzle, spawnPoint.position, spawnPoint.localRotation);
         muzzleInstance.transform.parent = spawnPoint;
+
+        GameObject shellInstance = Instantiate(shell, shellPoint.position, shellPoint.localRotation);
+        shellInstance.transform.parent = shellPoint;
 
         ClientSend.PlayerShoot(camTransform.forward);
     }
