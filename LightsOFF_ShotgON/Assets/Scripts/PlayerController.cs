@@ -138,6 +138,7 @@ public class PlayerController : MonoBehaviour
         }
 
         UpdateBulletsImage(currentMagazine);
+        
     }
 
     private void FixedUpdate()
@@ -162,7 +163,7 @@ public class PlayerController : MonoBehaviour
             }   
         }
         //------------
-        
+
         //Vector2 _inputDirection = Vector2.zero;
         //if (Input.GetKey(KeyCode.W))
         //{
@@ -184,8 +185,8 @@ public class PlayerController : MonoBehaviour
         SendInputToServer();
 
         //Move(_inputDirection);
-        
-        
+
+
     }
 
     //private void Move(Vector2 _inputDirection)

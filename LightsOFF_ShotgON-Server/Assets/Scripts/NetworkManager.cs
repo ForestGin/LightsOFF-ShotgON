@@ -40,7 +40,7 @@ public class NetworkManager : MonoBehaviour
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 30;//Limiting framerate bc we don't need it
 
-        Server.Start(50, 26950);
+        Server.Start(50, 7777);
 
         timeDifferenceThreshold = 0.05f; //0.1 bc its above and under
     }
